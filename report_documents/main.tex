@@ -1,7 +1,5 @@
 \documentclass[sigconf]{acmart}
 
-
-
 % \setcopyright{acmlicensed}
 % \copyrightyear{2024}
 % \acmYear{2024}
@@ -88,14 +86,6 @@
 transport, velocity extrapolation, logarithmic map, exponential map, Karcher
 mean, geometric median}
 
-\begin{teaserfigure}
-  \includegraphics[width=\textwidth]{sampleteaser}
-  \caption{Seattle Mariners at Spring Training, 2010.}
-  \Description{Enjoying the baseball game from the third-base
-  seats. Ichiro Suzuki preparing to bat.}
-  \label{fig:teaser}
-\end{teaserfigure}
-
 \received{20 February 2007}
 \received[revised]{12 March 2009}
 \received[accepted]{5 June 2009}
@@ -106,6 +96,36 @@ mean, geometric median}
 \maketitle
 
 \section{Introduction}
+
+\section{Context}
+(nicolas)
+
+\section{Methodologie}
+(cécile)
+
+\section{Experiences}
+
+\subsection{Our set-up}
+(icel)
+\subsection{Scalar heat rebustess (different noise types)}
+(icel)
+
+\subsection{T's verifications with perfect results}
+(nicolas)
+https://hhoppe.com/geodesics.pdf
+
+\subsection{Behavior at cut locus}
+(cécile)
+\subsection{Log-map recreation for postures}
+
+\subsection{Preprocessing vs processing times}
+
+\section{Limitations}
+\section{Conclusion}
+
+
+
+
 \section{BRAIN STORM:}
 \begin{itemize}
   \item Test robustness with a custom mesh + noise (similar to what they did) and mesh+crossed triangles (shortcuts should break the results?)
@@ -117,33 +137,8 @@ mean, geometric median}
   \item Check 2020 method to compute geodesics only by flipping triangles. One advantage seems to be that it works to find not only global shortest paths, but also local ones (if two points are next to each other, it can find the shortest path in the opposite direction by turning around)  https://dl.acm.org/doi/10.1145/3414685.3417839
   \item Test speed against fast marching method for scalar heat method
   \item Check behaviour at Cut locus and comment it
+  \item Look for applications the Karcher mean
 \end{itemize}
-\section{Travail à faire:}
-\begin{itemize}
-  \item Test different step sizes (t's) verify that 1 seems to be the best ()
-  \item Check behaviour at Cut locus and comment it
-  \item Test robustness with a custom mesh + noise (similar to what they did) and mesh+crossed triangles (shortcuts should break the results?)(Icel)
-  \item Compare results numerically with 'perfect' algorithm from https://hhoppe.com/geodesics.pdf
-  \item Find how to test with different data types (point clouds, triang meshes, poly meshes) and compare results (if possible in software without too much rewriting?)
-  \item Try results on bad vs good triangulated meshes (to check if Delaunay works fine)
-  \item Think about new possible applications? Videogames/3d animation?? 
-  \item Check 2020 method to compute geodesics only by flipping triangles. One advantage seems to be that it works to find not only global shortest paths, but also local ones (if two points are next to each other, it can find the shortest path in the opposite direction by turning around)  https://dl.acm.org/doi/10.1145/3414685.3417839
-  \item Test speed against fast marching method for scalar heat method
-\end{itemize}
-
-\begin{itemize}
-  \item Test application: put a texture on a moving 3d model to check coherency
-  \item Look for applications for the Karcher mean
-\end{itemize}
-
-\section{Context}
-\section{Solution}
-\section{Limits}
-
-
-
-
-
 
 \bibliographystyle{ACM-Reference-Format}
 \bibliography{sample-base}
