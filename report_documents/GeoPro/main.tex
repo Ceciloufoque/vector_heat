@@ -163,11 +163,23 @@ expansion holds:
 \end{comment}
 
 \section{Experiences}
+\subsection{Introduction}
 
 \subsection{Our set-up}
 (icel)
+To realise these experiences, we first tested the C++ demo presented in the paper's website. The solvers for the scalar and vector heat methods were implemented in a library named Geometry Central. These methods were also implemented by the author of the paper in a python library named Potpourri3d. We worked with the latter, using Trimesh for the manipulation of meshes and PyVision to visualize the results.
+
+For the 3d bodies used throught the experiment, we started with those in the XXX github repository, as they presented clean 3d manifolds.
+
+To clean some meshes we implemented a function ...
+
 \subsection{Scalar heat rebustess (different noise types)}
 (icel)
+To test noise rebustness on the scalar heat method, we first recreated the same type of perturbations as in the paper. For this we added a gaussian noise to each point in the 3 directions [fig X]. After this, we computed the distances from a single point and analyzed the results.
+
+We noted that these perturbations seem to be very artificial, so we implemented another noise adding mechanism where we switched the vertices of some triangle meshes depending on their proximity or randomly removed some triangles [fig Y]. Reaplying the same solver, we see that the results are ...
+
+Finally, we conclude that ...
 
 \subsection{T's verifications with perfect results}
 (nicolas)
