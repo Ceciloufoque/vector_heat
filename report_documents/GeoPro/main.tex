@@ -101,12 +101,34 @@ mean, geometric median}
 
 \section{Introduction}
 
-\section{Context}
+\section{Parallel Transport}
 (nicolas)
+\subsection{Preliminaries: Covariant Derivative}
+Transporting a vector in an euclidean space into a constant vector field is trivial. However, this operation done on a curved manifold, like for example a a curved surface in a 3D space, requires to carefully change the orientation of the vector to keep the vectors as "parallel" as possible. Indeed, the vectors must reamains in the tangent spaces of the surface while the normals of the tangent spaces change. When parallel transporting a vector along the shortest geodesic path, the vector rate of change should be only normal to the surface. 
+
+More formally, to keep the vector as parallel as possible, the covariant derivative should be equal to 0 \cite{youtube_video}. The covariant derivative along a direction $\vec{w} $ is the rate of change of the vector in the direction $\vec{w}$ with the normal component substracted (Eq. \ref{eq:covariant derivative}) i.e. the orthogonal projection of the usual derivative onto the tangent space.
+
+\begin{equation}
+  \nabla_{\vec{W}}\vec{v}:=\frac{d\vec{v}}{d\vec{w}}-\vec{n}=0
+  \label{eq:covariant derivative}
+\end{equation}
+
+\subsection{Applications}
+
+\paragraph{Log map}
+
+\paragraph{Karcher/Fréchet means and geometric medians on general surfaces }
+
+
+\subsection{Parallel Transport of a vector}
+
+transport vector along shortest path/geodesic
+
+
 
 \section{Methodologies}
 \subsection{Vector heat method}
-The vector heat method is presented in algorithm \ref{algo1}: the vector heat equation is used to diffuse the input vector field and then the scalar heat vector is used to adjust the magnitude of the resulting vectors. Indeed, the vector heat equation gives vectors pointing to the right directions for small values of time $t$ but the magnitudes are wrong. 
+The vector heat method \cite{sharp_vector_2019} is presented in algorithm \ref{algo1}: the vector heat equation is used to diffuse the input vector field and then the scalar heat vector is used to adjust the magnitude of the resulting vectors. Indeed, the vector heat equation gives vectors pointing to the right directions for small values of time $t$ but the magnitudes are wrong. 
 
 \begin{algorithm}
 \caption{Vector Heat Method} \label{algo1}
@@ -199,7 +221,7 @@ https://hhoppe.com/geodesics.pdf
   \item Look for applications the Karcher mean
 \end{itemize}
 \bibliographystyle{ACM-Reference-Format}
-\bibliography{sample-base}
+\bibliography{ref}
 
 \end{document}
 

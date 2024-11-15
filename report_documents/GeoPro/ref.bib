@@ -1,0 +1,47 @@
+@misc{youtube_video,
+  author       = {eigenchris},
+  title        = {Tensor Calculus 18: Covariant Derivative (extrinsic) and Parallel Transport},
+  howpublished = {YouTube},
+  year         = {2018},
+  url          = {https://www.youtube.com/watch?v=Af9JUiQtV1k},
+  note         = {Accessed: 2024-11-15}
+}
+
+
+@article{sharp_vector_2019,
+    title = {The {Vector} {Heat} {Method}},
+    volume = {38},
+    issn = {0730-0301, 1557-7368},
+    url = {https://dl.acm.org/doi/10.1145/3243651},
+    doi = {10.1145/3243651},
+    abstract = {This article describes a method for efficiently computing parallel transport of tangent vectors on curved surfaces, or more generally, any vector-valued data on a curved manifold. More precisely, it extends a vector field defined over any region to the rest of the domain via parallel transport along shortest geodesics. This basic operation enables fast, robust algorithms for extrapolating level set velocities, inverting the exponential map, computing geometric medians and Karcher/Fréchet means of arbitrary distributions, constructing centroidal Voronoi diagrams, and finding consistently ordered landmarks. Rather than evaluate parallel transport by explicitly tracing geodesics, we show that it can be computed via a short-time heat flow involving the
+              connection Laplacian
+              . As a result, transport can be achieved by solving three prefactored linear systems, each akin to a standard Poisson problem. To implement the method, we need only a discrete connection Laplacian, which we describe for a variety of geometric data structures (point clouds, polygon meshes, etc.). We also study the numerical behavior of our method, showing empirically that it converges under refinement, and augment the construction of intrinsic Delaunay triangulations so that they can be used in the context of tangent vector field processing.},
+    language = {en},
+    number = {3},
+    urldate = {2024-11-10},
+    journal = {ACM Transactions on Graphics},
+    author = {Sharp, Nicholas and Soliman, Yousuf and Crane, Keenan},
+    month = jun,
+    year = {2019},
+    pages = {1--19},
+    file = {PDF:C\:\\Users\\nicol\\Zotero\\storage\\UNAY8GV4\\Sharp et al. - 2019 - The Vector Heat Method.pdf:application/pdf},
+}
+
+@article{crane_geodesics_2013,
+    title = {Geodesics in heat: {A} new approach to computing distance based on heat flow},
+    volume = {32},
+    issn = {0730-0301},
+    shorttitle = {Geodesics in heat},
+    url = {https://doi.org/10.1145/2516971.2516977},
+    doi = {10.1145/2516971.2516977},
+    abstract = {We introduce the heat method for computing the geodesic distance to a specified subset (e.g., point or curve) of a given domain. The heat method is robust, efficient, and simple to implement since it is based on solving a pair of standard linear elliptic problems. The resulting systems can be prefactored once and subsequently solved in near-linear time. In practice, distance is updated an order of magnitude faster than with state-of-the-art methods, while maintaining a comparable level of accuracy. The method requires only standard differential operators and can hence be applied on a wide variety of domains (grids, triangle meshes, point clouds, etc.). We provide numerical evidence that the method converges to the exact distance in the limit of refinement; we also explore smoothed approximations of distance suitable for applications where greater regularity is required.},
+    number = {5},
+    urldate = {2024-11-10},
+    journal = {ACM Trans. Graph.},
+    author = {Crane, Keenan and Weischedel, Clarisse and Wardetzky, Max},
+    month = oct,
+    year = {2013},
+    pages = {152:1--152:11},
+    file = {Version soumise:C\:\\Users\\nicol\\Zotero\\storage\\4LFB3WPA\\Crane et al. - 2013 - Geodesics in heat A new approach to computing distance based on heat flow.pdf:application/pdf},
+}

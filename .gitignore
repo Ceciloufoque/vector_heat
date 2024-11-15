@@ -56,4 +56,6 @@ tags
 *.fdb_latexmk
 *.gz
 *.obj
+*.bbl
+*.blg
 main.pdf
