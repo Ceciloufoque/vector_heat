@@ -127,6 +127,10 @@ transport vector along shortest path/geodesic
 
 
 \section{Methodologies}
+Let $M$ be a Riemannian manifold with metric $g$. We denote by $d(x,y)$ the corresponding geodesic distance. 
+The cut locus of a point $p$ on $M$ is the closure of the set of all other points on $M$ that are connected to $p$
+by two or more distinct shortest geodesics. More generally, the cut locus of a closed set $X$ on $M$ is the closure of the set of 
+all other points on the manifold connected to $X$ by two or more distinct shortest geodesics.
 \subsection{Vector heat method}
 The vector heat method \cite{sharp_vector_2019} is presented in algorithm \ref{algo1}: the vector heat equation is used to diffuse the input vector field and then the scalar heat vector is used to adjust the magnitude of the resulting vectors. Indeed, the vector heat equation gives vectors pointing to the right directions for small values of time $t$ but the magnitudes are wrong. 
 
@@ -161,7 +165,34 @@ expansion holds:
   k_t^\nabla(x, y) \sim \frac{e^{-\frac{d(x, y)^2}{4t}}}{(4 \pi t)^{n/2} j(x, y)^\frac{1}{2}} 
 \left( \sum_{i=0}^{\infty} t^i \Psi_i(x, y) \right)
   \end{equation}
+where the functions $\Psi_i$ are maps taking vector at $x$ to vectors at $y$. Most importantly, we have that the first function in this series 
+is equal to:
+$$\Psi_0(x,y) = P_{\gamma_{x\rightarrow y}}, $$ where $\gamma_{x \rightarrow y}$ is the shortest geodesic from $x$ to $y$ and $P_\gamma(X)$
+denotes the parallel transport of X along $\gamma$. Thus, by taking $t\rightarrow 0$, the terms for which $i\neq 0$ vanish, so \textbf{the vector heat 
+kernel is asymptotically equal up to a constant to the parallel transport along shortest paths.} This explains the step 1 of the algorithm, whose goal 
+is to get the right directions of the parallel transport of the input vector field.
 \subsubsection{Step 2: get the right magnitudes}
+We use scalar interpolation to scale the vectors obtained in step 1 and get the right magnitudes. Assume we have a collection of sources
+$p_1, \dots, p_n \in M$ and associated values $u_1, \dots, u_n \in \mathbb{R}$. We define the functions $u$ and $\Phi$ 
+as the solutions of two independent heat equations with initial conditions:
+\begin{align}
+  u(t = 0, p) = \sum_{i = 1}^nu_i\delta_{p_i}(p) \label{eq:initial_condition_1}\\
+  \Phi(t = 0, p) = \sum_{i=1}^n\delta_{p_i}(p) \label{eq:initial_condition_2}
+\end{align}
+We then take as interpolant of the right magnitudes 
+\begin{equation}
+  \overline{u}(t,p) = \frac{u(t,p)}{\Phi(t,p)}
+\end{equation}
+In the following, we generalize the source set to any subset $\Omega \subset M$
+and so the initial conditions \ref{eq:initial_condition_1} and \ref{eq:initial_condition_2}
+are slightly modified to 
+\begin{align*}
+  u(t=0, p) = | X(p) | \\
+  \Phi(t=0, p) = \mathbf{1}_{\Omega}(p)
+\end{align*}
+
+
+
 \begin{comment}
 \begin{algorithm}
 \caption{An algorithm with caption}\label{alg:cap}
