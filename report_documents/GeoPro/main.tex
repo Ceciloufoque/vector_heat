@@ -2,6 +2,7 @@
 \usepackage{algorithm}
 \usepackage{algpseudocode}
 \usepackage{comment}
+\usepackage{subcaption}
 
 
 % \setcopyright{acmlicensed}
@@ -167,19 +168,116 @@ expansion holds:
 
 \subsection{Our set-up}
 (icel)
-To realise these experiences, we first tested the C++ demo presented in the paper's website. The solvers for the scalar and vector heat methods were implemented in a library named Geometry Central. These methods were also implemented by the author of the paper in a python library named Potpourri3d. We worked with the latter, using Trimesh for the manipulation of meshes and PyVision to visualize the results.
+To realise these experiences, we first tested the C++ demo presented in the paper's website.
+In this demo, the solvers for the scalar and vector heat methods were implemented in a library named Geometry Central.
+To simplify the experimentation and work in a more familiar set-up, we used instead a Python library equivalent named Potpourri3d \cite{library_potpourri3d}, 
+which was developped by one of the authors of the paper.
+In addition to this, we used Trimesh for the manipulation of meshes and PyVision to visualize the results.
 
-For the 3d bodies used throught the experiment, we started with those in the github repository \cite{github_objects_repo}, as they presented clean 3d manifolds.
+For the 3d bodies used throught the experiment, we started with those in the github repository~\cite{github_objects_repo},
+as they presented clean 3d manifolds.
 
-To clean some meshes we implemented a function ...
-
-\subsection{Scalar heat rebustess (different noise types)}
+\subsection{Scalar heat rebustess}
 (icel)
-To test noise rebustness on the scalar heat method, we first recreated the same type of perturbations as in the paper. For this we added a gaussian noise to each point in the 3 directions [fig X]. After this, we computed the distances from a single point and analyzed the results.
+The first experience we did was to analyze the rebustness of the Scalar Heat Method~\cite{Crane:2017:HMD}. In
+the original paper, the authors tested different noise types: missing and sliver triangles,
+noisy coordinates and smoothed surfaces. So we recreated similar perturbations and numerically
+measured the results.
 
-We noted that these perturbations seem to be very artificial, so we implemented another noise adding mechanism where we switched the vertices of some triangle meshes depending on their proximity or randomly removed some triangles [fig Y]. Reaplying the same solver, we see that the results are ...
+For this numerical representation, we decided to compare two things. First, the original body
+with an exact slower method from the gdist library~\cite{exact_method_algorithm}\cite{exact_method_library}
+against the noisy body with the scalar heat method.
+Then, the noisy body with the exact method against the noisy body with the scalar heat method again.
+The first values explain the imperfections comming from the inexact method and the noise, while
+the second only tests the behaviour of our method in a noisy environment.
 
-Finally, we conclude that ...
+Given $M = (V, F)$ our original mesh, $N = |V|$ the number of vertices in the mesh, $\hat{M} = (\hat{V}, \hat{F})$ the formulas used for this representation were:
+
+\begin{equation} \label{eq:nvn_precision}
+  \text{precision}_{\text{noisy v noisy}} = \frac{\sum_{i=1}^N \mathbf{1}_{\{|\text{dist}_1(\hat{V}_i) - \text{dist}_2(\hat{V}_i)| < 2\%\}}}{\text{N}} 
+\end{equation}
+
+\begin{equation} \label{eq:ovn_precision}
+  \text{precision}_{\text{original v noisy}} = \frac{\sum_{i=1}^N \mathbf{1}_{\{|\text{dist}_1(V_i) - \text{dist}_2(\hat{V}_i)| < 2\%\}}}{\text{N}} 
+\end{equation}
+
+Where $\text{dist}_1$ and $\text{dist}_2$ are both the normalized distances (from 0 to 1 for the intrinsic farthest point) obtained from the exact method and the shm respectively.
+
+We tested the rebustness with two different type of noises (Fig~\ref{fig:all_bunnies}), inspired from what was presented in the paper. 
+The first one is a gaussian perturbation of the position of all vertices. The variation of this noise was the noise level times the average edge length.
+The second noise was a triangle swapp and triangle removal of a percentage of all triangles.
+The triangle swap is simply to find a pair of faces $abc$, $bcd$ and convert them to $abd$ and $acd$.
+This last perturbation quickly degenerated the meshes to the point where the exact algorithm could not
+process the geodesic distances, so it was keept to a smaller noise level. 
+
+To have a more general analysis, we used three different meshes and a set of ten random
+source points. The meshes from the repo~\cite{github_objects_repo} were, in order of complexity, cow (5.8k triangles), the Stanford Bunny (69.5k triangles) and Horse (97k triangles).
+
+In fig~\ref{fig:original_vs_noisy} we have the precision of the shm method on noisy mesh compared with the exact method in the original mesh for
+different levels of gaussian noise, while in fig~\ref{fig:noisy_vs_noisy} we compare both methods only in the noisy objects.
+
+We can see for the the large meshes the precision starts being virtually perfect, but it
+decays gradually with the noise increases, this appears only on the first graph, as if we compare it to the noisy vs noisy, the precision
+only decays slightly for the noisiest tests. We can understand that most of these errors come from comparing the original and the noisy objects
+and do not depend on the method used.
+
+For smaller meshes, where the edge-length body-length ratio is more significant, we have that the precision is generally smaller,
+and even comparing both methods on the same noisy object gives a more significant number of inaccuracies, ranging from 10\% for the
+original object to 30\% for the largest noise levels.
+
+Analyzing the errors for the swapped and missing faces noise we plot our results
+in fig~\ref{fig:noisy_vs_noisy_swapped_and_removed}. We see that SHM is virtually perfect
+for larger meshes, but again the noise on the smaller model is more significant because
+of its simplicity, what leads to some imprecisions. 
+
+\begin{figure}
+  \centering
+  \includegraphics[width=8cm]{all_bunnies.png}
+  \caption{From left to right we have the original stanford-bunny, the gaussian noised (50\% of average edge length) and a triangle swapped and removed noise (5\% of all triangles affected)}
+  \label{fig:all_bunnies}
+\end{figure}
+
+\begin{figure}[htbp]
+  \centering
+  \hfill
+  \begin{subfigure}[b]{0.23\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{original_vs_noisy.png}
+    \caption{Original vs noisy meshes}
+    \label{fig:original_vs_noisy}
+  \end{subfigure}
+  \begin{subfigure}[b]{0.23\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{noisy_vs_noisy.png}
+    \caption{Noisy vs noisy meshes}
+    \label{fig:noisy_vs_noisy}
+  \end{subfigure}
+  \caption{Precision comparison with Gaussian noise}
+  \label{fig:original_vs_noisy_gaussian}
+\end{figure}
+
+\begin{figure}
+  \centering
+  \includegraphics[width=8cm]{original_vs_original_swapped_and_removed_triangles.png}
+  \caption{Noisy vs noisy meshes for swapped and removed faces noise type}
+  \label{fig:noisy_vs_noisy_swapped_and_removed}
+\end{figure}
+
+Lastly, one type of noise for triangle meshes that was not introduced in the paper comes from
+wrongly connected faces (Fig~\ref{fig:hands}). The algorithm presented is not inmune to these errors,
+as it gives a correct representation of the distance for the perturbed mesh. So the method
+presented is relatively robust to noise, but it still necesitates a curated mesh as its input. 
+
+One possible solution to this is to take a point cloud instead, if the manifold represented is
+dense enough, it will give a correct representation of the distances [Fig X].
+
+\begin{figure}
+  \centering
+  \includegraphics[width=8cm]{hands.png}
+  \caption{Shortest path from finger to finger with and without an crossed extra face}
+  \label{fig:hands}
+\end{figure}
+
 
 \subsection{T's verifications with perfect results}
 (nicolas)
