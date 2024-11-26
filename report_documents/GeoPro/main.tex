@@ -177,9 +177,9 @@ In addition to this, we used Trimesh for the manipulation of meshes and PyVision
 For the 3d bodies used throught the experiment, we started with those in the github repository~\cite{github_objects_repo},
 as they presented clean 3d manifolds.
 
-\subsection{Scalar heat rebustess}
+\subsection{Scalar heat robustness}
 (icel)
-The first experience we did was to analyze the rebustness of the Scalar Heat Method~\cite{Crane:2017:HMD}. In
+The first experience we did was to analyze the robustness of the Scalar Heat Method~\cite{Crane:2017:HMD}. In
 the original paper, the authors tested different noise types: missing and sliver triangles,
 noisy coordinates and smoothed surfaces. So we recreated similar perturbations and numerically
 measured the results.
@@ -203,7 +203,7 @@ Given $M = (V, F)$ our original mesh, $N = |V|$ the number of vertices in the me
 
 Where $\text{dist}_1$ and $\text{dist}_2$ are both the normalized distances (from 0 to 1 for the intrinsic farthest point) obtained from the exact method and the shm respectively.
 
-We tested the rebustness with two different type of noises (Fig~\ref{fig:all_bunnies}), inspired from what was presented in the paper. 
+We tested the robustness with two different type of noises (Fig~\ref{fig:all_bunnies}), inspired from what was presented in the paper. 
 The first one is a gaussian perturbation of the position of all vertices. The variation of this noise was the noise level times the average edge length.
 The second noise was a triangle swapp and triangle removal of a percentage of all triangles.
 The triangle swap is simply to find a pair of faces $abc$, $bcd$ and convert them to $abd$ and $acd$.
@@ -269,7 +269,7 @@ as it gives a correct representation of the distance for the perturbed mesh. So 
 presented is relatively robust to noise, but it still necesitates a curated mesh as its input. 
 
 One possible solution to this is to take a point cloud instead, if the manifold represented is
-dense enough, it will give a correct representation of the distances [Fig X].
+dense enough, it will give a correct representation of the distances (Fig~\ref{fig:hand_distances}).
 
 \begin{figure}
   \centering
@@ -278,6 +278,12 @@ dense enough, it will give a correct representation of the distances [Fig X].
   \label{fig:hands}
 \end{figure}
 
+\begin{figure}
+  \centering
+  \includegraphics[width=8cm]{hands_distances.png}
+  \caption{Distances from fingertip in original hand mesh, perturbed mesh and point cloud}
+  \label{fig:hand_distances}
+\end{figure}
 
 \subsection{T's verifications with perfect results}
 (nicolas)
