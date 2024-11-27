@@ -102,7 +102,7 @@ mean, geometric median}
 \section{Introduction}
 
 \section{Parallel Transport}
-(nicolas)
+
 \subsection{Preliminaries: Covariant Derivative}
 Transporting a vector in an euclidean space into a constant vector field is trivial. However, this operation done on a curved manifold, like for example a a curved surface in a 3D space, requires to carefully change the orientation of the vector to keep the vectors as "parallel" as possible. Indeed, the vectors must reamains in the tangent spaces of the surface while the normals of the tangent spaces change. When parallel transporting a vector along the shortest geodesic path, the vector rate of change should be only normal to the surface. 
 
@@ -113,16 +113,25 @@ More formally, to keep the vector as parallel as possible, the covariant derivat
   \label{eq:covariant derivative}
 \end{equation}
 
-\subsection{Applications}
-
-\paragraph{Log map}
-
-\paragraph{Karcher/Fréchet means and geometric medians on general surfaces }
-
-
 \subsection{Parallel Transport of a vector}
 
 transport vector along shortest path/geodesic
+
+\subsection{Applications}
+Parallel transporting a vector can be very useful in a wide range of applications where algorithm can build on it. It includes for example extrapolating velocities, mapping texture on a curved surface by defining a map relative to aspecified point, finding the center of a set of points on a curved surface, or even partition a shape whith a Voronoi diagram. Those methods would greatly benefit from a fast and accurate parallel transport method.
+
+\subsubsection{Extrapolating velocities}
+Parallel transport can be used to extrapolate velocities on a curved surface. To advect quantities like color or temperature, a global and well behaved velocity field on the surface is needed. The parallel transport can be used to extrapolate the velocity field from a set of points on the surface on the whole surface.
+
+\subsubsection{logarithmic map}
+Defining a map on a curved surface can be crucial for several tasks in geometry processing, like interactive shape editing or texture decaling. A map, called logarithmic map, can be easily commputed thanks to parallel transport. The logarithmic map is simply a map relative to a specified point on the surface with polar coordinates. 
+
+
+
+\subsubsection{Karcher/Fréchet means and geometric medians on general surfaces }
+
+\subsubsection{Voronoi diagram on surfaces}
+
 
 
 
