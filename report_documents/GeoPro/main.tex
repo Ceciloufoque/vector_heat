@@ -126,13 +126,23 @@ Parallel transport can be used to extrapolate velocities on a curved surface. To
 \subsubsection{logarithmic map}
 Defining a map on a curved surface can be crucial for several tasks in geometry processing, like interactive shape editing or texture decaling. A map, called logarithmic map, can be easily commputed thanks to parallel transport. The logarithmic map is simply a map relative to a specified point on the surface with polar coordinates. 
 
+It can be defined as the inverse operation of the exponential map. Let the point $x$ be on a closed surface $M$, the exponential map $\exp_x (rv)$ outputs the point $y\in M$ by starting from $x$ and walking in the tangent direction $v$ along a geodesic for a distance $r$. The logarithmic map $\log_x(y)$ is the inverse operation, it outputs the tangent vector $v$ and the smallest distance $r$ so that $\exp_x (rv)=y$. The vector $v$ can be associated with an angle $\varphi$ to define a polar coordinate system.
+
+While $r$ is easily defined as the geodesic distance between $y$ and $x$, $\varphi$ is defined as the angle between an "horizontal" vector field and the radial vector field emenating from the origin $x$. The radial vector field is the gradient of the geodesic distance from $x$. The horizontal vector field is the parallel transport on the all shape of any vector at x. This explain why parallel transport is needed to define the logarithmic map. 
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.5\textwidth]{img/logmap_paper.png}
+  \caption{\textbf{Logarithmic map on a curved surface}. \textmd{The logarithmic map provides a coordinate system on the surface with respect to an origin and a choice of an initial unit vector to define $\varphi$.}}
+  \label{fig:logarithmic_map}
+\end{figure}
 
 
 \subsubsection{Karcher/Fréchet means and geometric medians on general surfaces }
+Notion of center by minimizing a distance to all points of the set. The Karcher mean is the point that minimizes the sum of the squared geodesic distances to all points of the set. The gradient at a point $x$ of the energy to minimize is just the sum of the logarithms $\log_x y_i$ of the points of the set. Iteratively update and rceompute logmap. 
 
 \subsubsection{Voronoi diagram on surfaces}
-
-
+Derived from the karcher mean, the Voronoi diagram on surfaces is a partition of the surface into regions that are closer to a given set of points than to any other point on the surface. 
 
 
 \section{Methodologies}
