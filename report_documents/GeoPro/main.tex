@@ -194,7 +194,16 @@ is equal to:
 $$\Psi_0(x,y) = P_{\gamma_{x\rightarrow y}}, $$ where $\gamma_{x \rightarrow y}$ is the shortest geodesic from $x$ to $y$ and $P_\gamma(X)$
 denotes the parallel transport of X along $\gamma$. Thus, by taking $t\rightarrow 0$, the terms for which $i\neq 0$ vanish, so \textbf{the vector heat 
 kernel is asymptotically equal up to a constant to the parallel transport along shortest paths.} This explains the step 1 of the algorithm, whose goal 
-is to get the right directions of the parallel transport of the input vector field.
+is to get the right directions of the parallel transport of the input vector field. In the following, we denote by $Y$ the solution of the 
+vector diffusion equation 
+\begin{align*}
+  \begin{cases}
+  \frac{d}{dt}Y_t  = \Delta^\nabla Y_t \\
+  Y_0  = X.
+\end{cases}
+\end{align*}
+
+
 \subsubsection{Step 2: get the right magnitudes}
 We use scalar interpolation to scale the vectors obtained in step 1 and get the right magnitudes. Assume we have a collection of sources
 $p_1, \dots, p_n \in M$ and associated values $u_1, \dots, u_n \in \mathbb{R}$. We define the functions $u$ and $\Phi$ 
@@ -215,7 +224,9 @@ are slightly modified to
   \Phi(t=0, p) = \mathbf{1}_{\Omega}(p)
 \end{align*}
 
-
+\subsubsection{Step 3: getting the final transported vector field}
+The final step is simply to normalise the vector obtained in step 1 and scale them by the magnitudes obtained in step 2: 
+$$\overline{X}_t(p) = \frac{\overline{u}(t,p)Y_t(p)}{|Y_t(p)|}$$ with $\overline{u}(t,p) = \frac{u(t,p)}{\Phi(t, p)}$.
 
 \begin{comment}
 \begin{algorithm}
@@ -252,6 +263,8 @@ In addition to this, we used Trimesh for the manipulation of meshes and PyVision
 
 For the 3d bodies used throught the experiment, we started with those in the github repository~\cite{github_objects_repo},
 as they presented clean 3d manifolds.
+
+% RAJOUTER UN COMMENTAIRE SUR LE PREPROCESSING NECESSAIRE POUR APPLIQUER LES ALGORITHMES
 
 \subsection{Scalar heat robustness}
 (icel)
@@ -367,6 +380,41 @@ https://hhoppe.com/geodesics.pdf
 
 \subsection{Behavior at cut locus}
 (cécile)
+Because there is the ambiguity of choosing which closest point in $\Omega$ to take for points on the cut locus, we decided to check 
+the behaviour of the vector heat method on these points. For simplicity, $\Omega$ was restricted to a set a two source points $p_1, p_2$ and 
+the experiments were conducted on the same meshes mentioned above: the cow, the stanford bunny and the horse. We first used the heat method for 
+distance computation defined in \cite{heat_method_for_distance_computation} to compute the geodesic distances from our two points. The cut locus
+points were detected by setting a threshold to $\epsilon$ and looking at the vertices $p$ such that $|d(p_1, p) - d(p_2, p)|<\epsilon$. We then 
+observed the behaviour of the vector heat method at these points for $p_1, p_2$ sampled at random. Every time, the method yielded the result that 
+we expected. This can be explained by the fact due to the discretisation and the computation precision of the geodesic distances, the cut locus 
+points that are detected are not really on the cut locus, but only close to cut locus points. In theory, for points which are really on the cut 
+locus, the diffused vectors should be an average of all the closest vectors. 
+
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=0.8\textwidth]{figure.png}
+  \caption{Caption describing the figure.}
+  \label{fig:example}
+\end{figure}
+
+
+\begin{figure}[ht]
+  \centering
+  % First subfigure
+  \subfigure[Caption for Subfigure 1]{
+      \includegraphics[width=0.45\textwidth]{figure1.png}
+      \label{fig:subfig1}
+  }
+  \hfill
+  % Second subfigure
+  \subfigure[Caption for Subfigure 2]{
+      \includegraphics[width=0.45\textwidth]{figure2.png}
+      \label{fig:subfig2}
+  }
+  \caption{Main caption describing both subfigures.}
+  \label{fig:main}
+\end{figure}
+
 \subsection{Log-map recreation for postures}
 
 \subsection{Preprocessing vs processing times}
