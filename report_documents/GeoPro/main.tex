@@ -217,7 +217,7 @@ In fig~\ref{fig:original_vs_noisy} we have the precision of the shm method on no
 different levels of gaussian noise, while in fig~\ref{fig:noisy_vs_noisy} we compare both methods only in the noisy objects.
 
 We can see for the the large meshes the precision starts being virtually perfect, but it
-decays gradually with the noise increases, this appears only on the first graph, as if we compare it to the noisy vs noisy, the precision
+decays gradually with the noise increases. This appears only on the first graph, as if we compare it to the noisy vs noisy, the precision
 only decays slightly for the noisiest tests. We can understand that most of these errors come from comparing the original and the noisy objects
 and do not depend on the method used.
 
@@ -268,13 +268,13 @@ wrongly connected faces (Fig~\ref{fig:hands}). The algorithm presented is not in
 as it gives a correct representation of the distance for the perturbed mesh. So the method
 presented is relatively robust to noise, but it still necesitates a curated mesh as its input. 
 
-One possible solution to this is to take a point cloud instead, if the manifold represented is
+One possible solution to this is to take a point cloud instead. If the manifold represented is
 dense enough, it will give a correct representation of the distances (Fig~\ref{fig:hand_distances}).
 
 \begin{figure}
   \centering
   \includegraphics[width=8cm]{hands.png}
-  \caption{Shortest path from finger to finger with and without an crossed extra face}
+  \caption{Shortest path from finger to finger with and without an extra crossed face}
   \label{fig:hands}
 \end{figure}
 
@@ -296,22 +296,23 @@ https://hhoppe.com/geodesics.pdf
 \subsection{Preprocessing vs processing times}
 (icel)
 
-The implementation of the SHM algorithm is composed of two parts,
-a preprocessing to get the laplacians and the computation of the 
-distances from a source vertex/set of vectors.
+The implementation of the SHM algorithm is composed of two parts:
+a preprocessing to get the laplacians, and the computation of the 
+distances from a source vertex/set of vectors. In this point we wanted to compare the speed of this method with
+the exact method using meshes of different sizes. 
 
-In this point we wanted to compare the speed of this method with
-the exact method using meshes of different sizes. For the experiment,
-we ran three experiments, first measure the time for the exact method,
-then measure the time for the SHM executing the preprocessing and processing
-every loop, and finally executing the SHM preprocessing once and then computing
-the distances in the loop.
+For the experiment, we ran three tests. First, we measured the time for the exact method,
+then we measured the time for the SHM executing the preprocessing and processing
+every loop, and finally we executed the SHM preprocessing once and then we only computed
+the distances in the loop. We plotted the results obtained in fig~\ref{fig:time_graphs}. 
 
-We plotted the results obtained in fig~\ref{fig:time_graphs}. We can see that
-for the larger plots the exact algorithm is slower than the SHM. However, almost all
-time is dedicated to the preprocessing of the mesh, so the improvements are not so
-
-If we could only use the FMM in python...
+We can see that for the larger plots the exact algorithm is slower than the SHM. 
+However, almost all of the time is dedicated to the preprocessing of the mesh, 
+so the real advantage of the method is for the case where we work with a limited
+quantity of meshes that we have preprocess beforehand. Moreover, we did not
+use the Fast marching method for the comparaisson due to complications on its
+implementation in python, so there is probably an even smaller time gain for using
+the SHM if we compare it with non-exact fast methods.
 
 \begin{figure}
   \centering
