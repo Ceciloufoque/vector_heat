@@ -3,6 +3,7 @@
 \usepackage{algpseudocode}
 \usepackage{comment}
 \usepackage{subcaption}
+\usepackage{subcaption}
 
 
 % \setcopyright{acmlicensed}
@@ -102,6 +103,51 @@ mean, geometric median}
 
 \section{Introduction}
 
+
+\section{Parallel Transport}
+
+\subsection{Preliminaries: Covariant Derivative}
+Transporting a vector in an euclidean space into a constant vector field is trivial. However, this operation done on a curved manifold, like for example a a curved surface in a 3D space, requires to carefully change the orientation of the vector to keep the vectors as "parallel" as possible. Indeed, the vectors must reamains in the tangent spaces of the surface while the normals of the tangent spaces change. When parallel transporting a vector along the shortest geodesic path, the vector rate of change should be only normal to the surface. 
+
+More formally, to keep the vector as parallel as possible, the covariant derivative should be equal to 0 \cite{youtube_video}. The covariant derivative along a direction $\vec{w} $ is the rate of change of the vector in the direction $\vec{w}$ with the normal component substracted (Eq. \ref{eq:covariant derivative}) i.e. the orthogonal projection of the usual derivative onto the tangent space.
+
+\begin{equation}
+  \nabla_{\vec{W}}\vec{v}:=\frac{d\vec{v}}{d\vec{w}}-\vec{n}=0
+  \label{eq:covariant derivative}
+\end{equation}
+
+\subsection{Parallel Transport of a vector}
+
+transport vector along shortest path/geodesic
+
+\subsection{Applications}
+Parallel transporting a vector can be very useful in a wide range of applications where algorithm can build on it. It includes for example extrapolating velocities, mapping texture on a curved surface by defining a map relative to aspecified point, finding the center of a set of points on a curved surface, or even partition a shape whith a Voronoi diagram. Those methods would greatly benefit from a fast and accurate parallel transport method.
+
+\subsubsection{Extrapolating velocities}
+Parallel transport can be used to extrapolate velocities on a curved surface. To advect quantities like color or temperature, a global and well behaved velocity field on the surface is needed. The parallel transport can be used to extrapolate the velocity field from a set of points on the surface on the whole surface.
+
+\subsubsection{logarithmic map}
+Defining a map on a curved surface can be crucial for several tasks in geometry processing, like interactive shape editing or texture decaling. A map, called logarithmic map, can be easily commputed thanks to parallel transport. The logarithmic map is simply a map relative to a specified point on the surface with polar coordinates. 
+
+It can be defined as the inverse operation of the exponential map. Let the point $x$ be on a closed surface $M$, the exponential map $\exp_x (rv)$ outputs the point $y\in M$ by starting from $x$ and walking in the tangent direction $v$ along a geodesic for a distance $r$. The logarithmic map $\log_x(y)$ is the inverse operation, it outputs the tangent vector $v$ and the smallest distance $r$ so that $\exp_x (rv)=y$. The vector $v$ can be associated with an angle $\varphi$ to define a polar coordinate system.
+
+While $r$ is easily defined as the geodesic distance between $y$ and $x$, $\varphi$ is defined as the angle between an "horizontal" vector field and the radial vector field emenating from the origin $x$. The radial vector field is the gradient of the geodesic distance from $x$. The horizontal vector field is the parallel transport on the all shape of any vector at x. This explain why parallel transport is needed to define the logarithmic map. 
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.5\textwidth]{img/logmap_paper.png}
+  \caption{\textbf{Logarithmic map on a curved surface}. \textmd{The logarithmic map provides a coordinate system on the surface with respect to an origin and a choice of an initial unit vector to define $\varphi$.}}
+  \label{fig:logarithmic_map}
+\end{figure}
+
+
+\subsubsection{Karcher/Fréchet means and geometric medians on general surfaces }
+Notion of center by minimizing a distance to all points of the set. The Karcher mean is the point that minimizes the sum of the squared geodesic distances to all points of the set. The gradient at a point $x$ of the energy to minimize is just the sum of the logarithms $\log_x y_i$ of the points of the set. Iteratively update and rceompute logmap. 
+
+\subsubsection{Voronoi diagram on surfaces}
+Derived from the karcher mean, the Voronoi diagram on surfaces is a partition of the surface into regions that are closer to a given set of points than to any other point on the surface. 
+
+
 \section{Context}
 (nicolas)
 
@@ -140,7 +186,45 @@ expansion holds:
   k_t^\nabla(x, y) \sim \frac{e^{-\frac{d(x, y)^2}{4t}}}{(4 \pi t)^{n/2} j(x, y)^\frac{1}{2}} 
 \left( \sum_{i=0}^{\infty} t^i \Psi_i(x, y) \right)
   \end{equation}
+where the functions $\Psi_i$ are maps taking vector at $x$ to vectors at $y$. Most importantly, we have that the first function in this series 
+is equal to:
+$$\Psi_0(x,y) = P_{\gamma_{x\rightarrow y}}, $$ where $\gamma_{x \rightarrow y}$ is the shortest geodesic from $x$ to $y$ and $P_\gamma(X)$
+denotes the parallel transport of X along $\gamma$. Thus, by taking $t\rightarrow 0$, the terms for which $i\neq 0$ vanish, so \textbf{the vector heat 
+kernel is asymptotically equal up to a constant to the parallel transport along shortest paths.} This explains the step 1 of the algorithm, whose goal 
+is to get the right directions of the parallel transport of the input vector field. In the following, we denote by $Y$ the solution of the 
+vector diffusion equation 
+\begin{align*}
+  \begin{cases}
+  \frac{d}{dt}Y_t  = \Delta^\nabla Y_t \\
+  Y_0  = X.
+\end{cases}
+\end{align*}
+
+
 \subsubsection{Step 2: get the right magnitudes}
+We use scalar interpolation to scale the vectors obtained in step 1 and get the right magnitudes. Assume we have a collection of sources
+$p_1, \dots, p_n \in M$ and associated values $u_1, \dots, u_n \in \mathbb{R}$. We define the functions $u$ and $\Phi$ 
+as the solutions of two independent heat equations with initial conditions:
+\begin{align}
+  u(t = 0, p) = \sum_{i = 1}^nu_i\delta_{p_i}(p) \label{eq:initial_condition_1}\\
+  \Phi(t = 0, p) = \sum_{i=1}^n\delta_{p_i}(p) \label{eq:initial_condition_2}
+\end{align}
+We then take as interpolant of the right magnitudes 
+\begin{equation}
+  \overline{u}(t,p) = \frac{u(t,p)}{\Phi(t,p)}
+\end{equation}
+In the following, we generalize the source set to any subset $\Omega \subset M$
+and so the initial conditions \ref{eq:initial_condition_1} and \ref{eq:initial_condition_2}
+are slightly modified to 
+\begin{align*}
+  u(t=0, p) = | X(p) | \\
+  \Phi(t=0, p) = \mathbf{1}_{\Omega}(p)
+\end{align*}
+
+\subsubsection{Step 3: getting the final transported vector field}
+The final step is simply to normalise the vector obtained in step 1 and scale them by the magnitudes obtained in step 2: 
+$$\overline{X}_t(p) = \frac{\overline{u}(t,p)Y_t(p)}{|Y_t(p)|}$$ with $\overline{u}(t,p) = \frac{u(t,p)}{\Phi(t, p)}$.
+
 \begin{comment}
 \begin{algorithm}
 \caption{An algorithm with caption}\label{alg:cap}
@@ -165,6 +249,7 @@ expansion holds:
 
 \section{Experiences}
 \subsection{Introduction}
+\subsection{Introduction}
 
 \subsection{Our set-up}
 (icel)
@@ -177,9 +262,11 @@ In addition to this, we used Trimesh for the manipulation of meshes and PyVision
 For the 3d bodies used throught the experiment, we started with those in the github repository~\cite{github_objects_repo},
 as they presented clean 3d manifolds.
 
+% RAJOUTER UN COMMENTAIRE SUR LE PREPROCESSING NECESSAIRE POUR APPLIQUER LES ALGORITHMES
+
 \subsection{Scalar heat robustness}
 (icel)
-The first experience we did was to analyze the robustness of the Scalar Heat Method~\cite{Crane:2017:HMD}. In
+The first experience we did was to analyze the robustness of the Scalar Heat Method~\cite{crane_geodesics_2013}. In
 the original paper, the authors tested different noise types: missing and sliver triangles,
 noisy coordinates and smoothed surfaces. So we recreated similar perturbations and numerically
 measured the results.
@@ -291,6 +378,40 @@ https://hhoppe.com/geodesics.pdf
 
 \subsection{Behavior at cut locus}
 (cécile)
+Because there is the ambiguity of choosing which closest point in $\Omega$ to take for points on the cut locus, we decided to check 
+the behaviour of the vector heat method on these points. For simplicity, $\Omega$ was restricted to a set a two source points $p_1, p_2$ and 
+the experiments were conducted on the same meshes mentioned above: the cow, the stanford bunny and the horse. We first used the heat method for 
+distance computation defined in \cite{crane_geodesics_2013} to compute the geodesic distances from our two points. The cut locus
+points were detected by setting a threshold to $\epsilon$ and looking at the vertices $p$ such that $|d(p_1, p) - d(p_2, p)|<\epsilon$. We then 
+observed the behaviour of the vector heat method at these points for $p_1, p_2$ sampled at random. Every time, the method yielded the result that 
+we expected. This can be explained by the fact due to the discretisation and the computation precision of the geodesic distances, the cut locus 
+points that are detected are not really on the cut locus, but only close to cut locus points. In theory, for points which are really on the cut 
+locus, the diffused vectors should be an average of all the closest vectors. In figures \ref{fig:cut_locus_vectors}, you can see that
+the "cut locus" vectors constitute a non-continuity of the vector field but they all point to the right directions. 
+
+
+%\begin{comment}
+\begin{figure}[htbp]
+  \centering
+  \hfill
+  \begin{subfigure}[b]{0.23\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{img/cut_only_distances_pink.png}
+    \caption{Geodesic distances on the cow mesh}
+    \label{fig:cut_locus_only_distances}
+  \end{subfigure}
+  \begin{subfigure}[b]{0.23\textwidth}
+    \centering
+    \includegraphics[width=0.7\textwidth]{img/cow_cut_locus_vectors.png}
+    \caption{Cut locus vectors on the cow mesh}
+    \label{fig:cut_locus_cow_vectors}
+  \end{subfigure}
+  \caption{Precision comparison with Gaussian noise}
+  \label{fig:cut_locus_vectors}
+\end{figure}
+
+%\end{comment}
+
 \subsection{Log-map recreation for postures}
 
 \subsection{Preprocessing vs processing times}
@@ -338,8 +459,9 @@ the SHM if we compare it with non-exact fast methods.
   \item Look for applications the Karcher mean
 \end{itemize}
 
+
 \bibliographystyle{ACM-Reference-Format}
-\bibliography{sample-base}
+\bibliography{ref}
 
 
 \end{document}
