@@ -141,14 +141,15 @@ While $r$ is easily defined as the geodesic distance between $y$ and $x$, $\varp
 
 
 \subsubsection{Karcher/Fréchet means and geometric medians on general surfaces }
-Notion of center by minimizing a distance to all points of the set. The Karcher mean is the point that minimizes the sum of the squared geodesic distances to all points of the set. The gradient at a point $x$ of the energy to minimize is just the sum of the logarithms $\log_x y_i$ of the points of the set. Iteratively update and rceompute logmap. 
+A general notion of center can be defined on shapes as the point that minimize an energy which depends on its geodesic distances to all points of the set. 
+Let $y_1$, $y_2$, ..., $y_n$ be a set of points on a surface $M$, the kercher mean is the point that minimizes the following energy:
+$$E(x):=\frac{1}{2n}\sum_{i=1}^{n}d(x,y_i)^2$$
+
+The gradient at a point $x$ of the energy to minimize is just the mean of the logarithms $\log_x y_i$ of the points of the set. To find the mean, $x$ can be iteratively updated to $\exp_{x}(\tau v)$ with $v=\frac{1}{n}\sum_{i=1}^{n}\log_x(y_i)$. However, it requires to compute the logarithmic map at each iteration. Thus, a fast and accurate parallel transport method would allow the computation of the mean using the logarithmic maps.
 
 \subsubsection{Voronoi diagram on surfaces}
 Derived from the karcher mean, the Voronoi diagram on surfaces is a partition of the surface into regions that are closer to a given set of points than to any other point on the surface. 
 
-
-\section{Context}
-(nicolas)
 
 \section{Methodologies}
 Let $M$ be a Riemannian manifold with metric $g$. We denote by $d(x,y)$ the corresponding geodesic distance. 
@@ -390,30 +391,30 @@ we expected. This can be explained by the fact due to the discretisation and the
 points that are detected are not really on the cut locus, but only close to cut locus points. In theory, for points which are really on the cut 
 locus, the diffused vectors should be an average of all the closest vectors. 
 
-\begin{figure}[ht]
-  \centering
-  \includegraphics[width=0.8\textwidth]{figure.png}
-  \caption{Caption describing the figure.}
-  \label{fig:example}
-\end{figure}
+% \begin{figure}[ht]
+%   \centering
+%   \includegraphics[width=0.8\textwidth]{figure.png}
+%   \caption{Caption describing the figure.}
+%   \label{fig:example}
+% \end{figure}
 
 
-\begin{figure}[ht]
-  \centering
-  % First subfigure
-  \subfigure[Caption for Subfigure 1]{
-      \includegraphics[width=0.45\textwidth]{figure1.png}
-      \label{fig:subfig1}
-  }
-  \hfill
-  % Second subfigure
-  \subfigure[Caption for Subfigure 2]{
-      \includegraphics[width=0.45\textwidth]{figure2.png}
-      \label{fig:subfig2}
-  }
-  \caption{Main caption describing both subfigures.}
-  \label{fig:main}
-\end{figure}
+% \begin{figure}[ht]
+%   \centering
+%   % First subfigure
+%   \subfigure[Caption for Subfigure 1]{
+%       \includegraphics[width=0.45\textwidth]{figure1.png}
+%       \label{fig:subfig1}
+%   }
+%   \hfill
+%   % Second subfigure
+%   \subfigure[Caption for Subfigure 2]{
+%       \includegraphics[width=0.45\textwidth]{figure2.png}
+%       \label{fig:subfig2}
+%   }
+%   \caption{Main caption describing both subfigures.}
+%   \label{fig:main}
+% \end{figure}
 
 \subsection{Log-map recreation for postures}
 
@@ -444,7 +445,7 @@ If we could only use the FMM in python...
   \label{fig:time_graphs}
 \end{figure}
 
-
+\section{Conclusion}
 
 
 \section{BRAIN STORM:}
