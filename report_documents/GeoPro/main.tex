@@ -249,20 +249,21 @@ $$\overline{X}_t(p) = \frac{\overline{u}(t,p)Y_t(p)}{|Y_t(p)|}$$ with $\overline
 
 \section{Experiences}
 \subsection{Introduction}
-\subsection{Introduction}
 
 \subsection{Our set-up}
 (icel)
 To realise these experiences, we first tested the C++ demo presented in the paper's website.
 In this demo, the solvers for the scalar and vector heat methods were implemented in a library named Geometry Central.
 To simplify the experimentation and work in a more familiar set-up, we used instead a Python library equivalent named Potpourri3d \cite{library_potpourri3d}, 
-which was developped by one of the authors of the paper.
-In addition to this, we used Trimesh for the manipulation of meshes and PyVision to visualize the results.
-
+which was developped by Sharp (one of the authors of the paper).
+In addition to this, we used Trimesh for the manipulation of meshes and PyVision to visualize the results. 
 For the 3d bodies used throught the experiment, we started with those in the github repository~\cite{github_objects_repo},
 as they presented clean 3d manifolds.
 
-% RAJOUTER UN COMMENTAIRE SUR LE PREPROCESSING NECESSAIRE POUR APPLIQUER LES ALGORITHMES
+A fraction of the meshes used contained some degenerations present in the form of duplicate edges, disconections or isolated vertices.
+This required an extra step in the preprocessing before applying the algorithms. The first step consisted in the union of all vertices in
+an epsilon distance from one another, which removed disconections. Then we removed unreferenced vertices to avoid isolated ones. And finally,
+for the duplicated edges, we did a more manual approach by analyzing the origin of the errors and removed the faces that generated the issue. 
 
 \subsection{Scalar heat robustness}
 (icel)
