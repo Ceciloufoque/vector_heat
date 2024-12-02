@@ -325,6 +325,7 @@ of its simplicity, what leads to some imprecisions.
   \includegraphics[width=8cm]{all_bunnies.png}
   \caption{From left to right we have the original stanford-bunny, the gaussian noised (50\% of average edge length) and a triangle swapped and removed noise (5\% of all triangles affected)}
   \label{fig:all_bunnies}
+  \Description{}
 \end{figure}
 
 \begin{figure}[htbp]
@@ -344,6 +345,7 @@ of its simplicity, what leads to some imprecisions.
   \end{subfigure}
   \caption{Precision comparison with Gaussian noise}
   \label{fig:original_vs_noisy_gaussian}
+  \Description{}
 \end{figure}
 
 \begin{figure}
@@ -384,37 +386,36 @@ https://hhoppe.com/geodesics.pdf
 Because there is the ambiguity of choosing which closest point in $\Omega$ to take for points on the cut locus, we decided to check 
 the behaviour of the vector heat method on these points. For simplicity, $\Omega$ was restricted to a set a two source points $p_1, p_2$ and 
 the experiments were conducted on the same meshes mentioned above: the cow, the stanford bunny and the horse. We first used the heat method for 
-distance computation defined in \cite{heat_method_for_distance_computation} to compute the geodesic distances from our two points. The cut locus
+distance computation defined in \cite{crane_geodesics_2013} to compute the geodesic distances from our two points. The cut locus
 points were detected by setting a threshold to $\epsilon$ and looking at the vertices $p$ such that $|d(p_1, p) - d(p_2, p)|<\epsilon$. We then 
 observed the behaviour of the vector heat method at these points for $p_1, p_2$ sampled at random. Every time, the method yielded the result that 
 we expected. This can be explained by the fact due to the discretisation and the computation precision of the geodesic distances, the cut locus 
 points that are detected are not really on the cut locus, but only close to cut locus points. In theory, for points which are really on the cut 
-locus, the diffused vectors should be an average of all the closest vectors. 
-
-% \begin{figure}[ht]
-%   \centering
-%   \includegraphics[width=0.8\textwidth]{figure.png}
-%   \caption{Caption describing the figure.}
-%   \label{fig:example}
-% \end{figure}
+locus, the diffused vectors should be an average of all the closest vectors. In figures \ref{fig:cut_locus_vectors}, you can see that
+the "cut locus" vectors constitute a non-continuity of the vector field but they all point to the right directions. 
 
 
-% \begin{figure}[ht]
-%   \centering
-%   % First subfigure
-%   \subfigure[Caption for Subfigure 1]{
-%       \includegraphics[width=0.45\textwidth]{figure1.png}
-%       \label{fig:subfig1}
-%   }
-%   \hfill
-%   % Second subfigure
-%   \subfigure[Caption for Subfigure 2]{
-%       \includegraphics[width=0.45\textwidth]{figure2.png}
-%       \label{fig:subfig2}
-%   }
-%   \caption{Main caption describing both subfigures.}
-%   \label{fig:main}
-% \end{figure}
+%\begin{comment}
+\begin{figure}[htbp]
+  \centering
+  \hfill
+  \begin{subfigure}[b]{0.23\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{img/cut_only_distances_pink.png}
+    \caption{Geodesic distances on the cow mesh}
+    \label{fig:cut_locus_only_distances}
+  \end{subfigure}
+  \begin{subfigure}[b]{0.23\textwidth}
+    \centering
+    \includegraphics[width=0.7\textwidth]{img/cow_cut_locus_vectors.png}
+    \caption{Cut locus vectors on the cow mesh}
+    \label{fig:cut_locus_cow_vectors}
+  \end{subfigure}
+  \caption{Precision comparison with Gaussian noise}
+  \label{fig:cut_locus_vectors}
+\end{figure}
+
+%\end{comment}
 
 \subsection{Log-map recreation for postures}
 
