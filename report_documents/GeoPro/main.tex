@@ -228,6 +228,36 @@ are slightly modified to
 The final step is simply to normalise the vector obtained in step 1 and scale them by the magnitudes obtained in step 2: 
 $$\overline{X}_t(p) = \frac{\overline{u}(t,p)Y_t(p)}{|Y_t(p)|}$$ with $\overline{u}(t,p) = \frac{u(t,p)}{\Phi(t, p)}$.
 
+\subsection{Discretization}
+The vector heat method is is discretized on triangle meshes denoted by $K = (V, E, F)$
+with $V$ being the set of vertices, $E$ being the set of edges and $F$ 
+being the set of corresponding faces. The discretization formalism relies 
+on results presented in articles \cite{10.1145/2461912.2462005} and \cite{Knoppel:2015:SPS}.
+Denote by $ikj$ the triangle with vertices $i, j, k \in V$ and $\theta_k^{ij}$ the angle at 
+vertex $k$ whose opposite edge is $ij\in E$. Likewise, we define $\theta_i^{jk}$ 
+and $\theta_j^{ik}$ as the angles at vertices $i$ and $j$ whose opposite edges are $jk, ik \in E$. 
+Let $a = \cot \theta_i^{jk}$, $b = \cot \theta_j^{ki}$ and $c = \cot \theta_k^{ij}$. 
+\subsubsection{Discrete Laplace-Beltrami operator $\Delta$}
+The Laplace Beltrami operator $\Delta$ is discretized into a weighted graph Laplacian $L\in \mathbb{R}^{|V|\times |V|}$.
+$L$ is constructed such that if the triangle $ijk$ is in entry, then 
+$$L_{ijk} = -\frac{1}{2}\begin{pmatrix}
+  b + c & -c & -b \\
+  -c & c + a & -a \\
+  -b & -a & a + b
+  \end{pmatrix}.$$
+
+\subsubsection{Discrete connection Laplacian $\Delta^\nabla$} The discretized connection Laplacian 
+$\Delta^\nabla$ is given by $L^\nabla \in \mathbb{C}^{|V|\times|V|}$. We define 
+$\phi_{ij}$ as the rotation angle that separates a canonical edge $ij_0$ to the edge
+$ij$ in the counter-clockwise order. Let $r_{ij} = e^{i((\phi_{ji} + \pi) -  \phi_{ij})}$.
+Then, $$
+L^\nabla_{ijk} = -\frac{1}{2}\begin{pmatrix}
+  b + c & -cr_{ij} & -br_{ik} \\
+  -cr_{ji} & c + a & -ar_{jk} \\
+  -br_{ki} & -ar_{kj} & a + b
+  \end{pmatrix}.
+$$
+\subsubsection{Intrinsic Delaunay triangulation} To improve robustness and 
 \begin{comment}
 \begin{algorithm}
 \caption{An algorithm with caption}\label{alg:cap}
@@ -410,7 +440,7 @@ the "cut locus" vectors constitute a non-continuity of the vector field but they
     \caption{Cut locus vectors on the cow mesh}
     \label{fig:cut_locus_cow_vectors}
   \end{subfigure}
-  \caption{Precision comparison with Gaussian noise}
+  \caption{Vector heat method on pseudo cut locus points}
   \label{fig:cut_locus_vectors}
 \end{figure}
 
