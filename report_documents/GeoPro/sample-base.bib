@@ -65,6 +65,25 @@
   howpublished = {\url{https://github.com/nmwsharp/potpourri3d}},
 }
 
+@article{polthier_straightest_2006,
+  title = {Straightest {Geodesics} on {Polyhedral} {Surfaces}},
+  abstract = {Geodesic curves are the fundamental concept in geometry to generalize the idea of straight lines to curved surfaces and arbitrary manifolds. On polyhedral surfaces we introduce the notion of discrete geodesic curvature of curves and deﬁne straightest geodesics. This allows a unique solution of the initial value problem for geodesics, and therefore a unique movement in a given tangential direction, a property not available in the well-known concept of locally shortest geodesics.},
+  language = {en},
+  journal = {Discrete Differential Geometry},
+  author = {Polthier, Konrad and Schmies, Markus},
+  year = {2006},
+  file = {PDF:C\:\\Users\\nicol\\Zotero\\storage\\39RBEJH2\\Polthier et Schmies - 2006 - Straightest Geodesics on Polyhedral Surfaces.pdf:application/pdf},
+}
+
+@article{surazhsky_fast_nodate,
+  title = {Fast exact and approximate geodesics on meshes},
+  abstract = {The computation of geodesic paths and distances on triangle meshes is a common operation in many computer graphics applications. We present several practical algorithms for computing such geodesics from a source point to one or all other points efﬁciently. First, we describe an implementation of the exact “single source, all destination” algorithm presented by Mitchell, Mount, and Papadimitriou (MMP). We show that the algorithm runs much faster in practice than suggested by worst case analysis. Next, we extend the algorithm with a merging operation to obtain computationally efﬁcient and accurate approximations with bounded error. Finally, to compute the shortest path between two given points, we use a lower-bound property of our approximate geodesic algorithm to efﬁciently prune the frontier of the MMP algorithm, thereby obtaining an exact solution even more quickly.},
+  language = {en},
+  year = {2005},
+  author = {Surazhsky, Vitaly and Surazhsky, Tatiana and Kirsanov, Danil and Gortler, Steven J and Hoppe, Hugues},
+  file = {PDF:C\:\\Users\\nicol\\Zotero\\storage\\STX9CCPN\\Surazhsky et al. - Fast exact and approximate geodesics on meshes.pdf:application/pdf},
+}
+
 @misc{github_objects_repo,
   title = {common 3d objects repository},
   publisher = {GitHub},
@@ -88,3 +107,56 @@
     journal = {Society for Industrial and Applied Mathematics},
     year = {1987}
 }
+
+
+@article{crane_geodesics_2013,
+    title = {Geodesics in heat: {A} new approach to computing distance based on heat flow},
+    volume = {32},
+    issn = {0730-0301},
+    shorttitle = {Geodesics in heat},
+    url = {https://doi.org/10.1145/2516971.2516977},
+    doi = {10.1145/2516971.2516977},
+    abstract = {We introduce the heat method for computing the geodesic distance to a specified subset (e.g., point or curve) of a given domain. The heat method is robust, efficient, and simple to implement since it is based on solving a pair of standard linear elliptic problems. The resulting systems can be prefactored once and subsequently solved in near-linear time. In practice, distance is updated an order of magnitude faster than with state-of-the-art methods, while maintaining a comparable level of accuracy. The method requires only standard differential operators and can hence be applied on a wide variety of domains (grids, triangle meshes, point clouds, etc.). We provide numerical evidence that the method converges to the exact distance in the limit of refinement; we also explore smoothed approximations of distance suitable for applications where greater regularity is required.},
+    number = {5},
+    urldate = {2024-11-10},
+    journal = {ACM Trans. Graph.},
+    author = {Crane, Keenan and Weischedel, Clarisse and Wardetzky, Max},
+    month = oct,
+    year = {2013},
+    pages = {152:1--152:11},
+    file = {Version soumise:C\:\\Users\\nicol\\Zotero\\storage\\4LFB3WPA\\Crane et al. - 2013 - Geodesics in heat A new approach to computing distance based on heat flow.pdf:application/pdf},
+}
+
+
+    @article{10.1145/2461912.2462005,
+    author = {Kn\"{o}ppel, Felix and Crane, Keenan and Pinkall, Ulrich and Schr\"{o}der, Peter},
+    title = {Globally optimal direction fields},
+    year = {2013},
+    issue_date = {July 2013},
+    publisher = {Association for Computing Machinery},
+    address = {New York, NY, USA},
+    volume = {32},
+    number = {4},
+    issn = {0730-0301},
+    url = {https://doi.org/10.1145/2461912.2462005},
+    doi = {10.1145/2461912.2462005},
+    abstract = {We present a method for constructing smooth n-direction fields (line fields, cross fields, etc.) on surfaces that is an order of magnitude faster than state-of-the-art methods, while still producing fields of equal or better quality. Fields produced by the method are globally optimal in the sense that they minimize a simple, well-defined quadratic smoothness energy over all possible configurations of singularities (number, location, and index). The method is fully automatic and can optionally produce fields aligned with a given guidance field such as principal curvature directions. Computationally the smoothest field is found via a sparse eigenvalue problem involving a matrix similar to the cotan-Laplacian. When a guidance field is present, finding the optimal field amounts to solving a single linear system.},
+    journal = {ACM Trans. Graph.},
+    month = jul,
+    articleno = {59},
+    numpages = {10},
+    keywords = {curvature lines, digital geometry processing, direction fields, discrete differential geometry, singularities}
+    }
+
+      
+@article{Knoppel:2015:SPS,
+   author = {Kn\"{o}ppel, Felix and Crane, Keenan and Pinkall, Ulrich and Schr\"{o}der, Peter},
+   title = {Stripe Patterns on Surfaces},
+   journal = {ACM Trans. Graph.},
+   volume = {34},
+   issue = {4},
+   year = {2015},
+   publisher = {ACM},
+   address = {New York, NY, USA},
+}
+
