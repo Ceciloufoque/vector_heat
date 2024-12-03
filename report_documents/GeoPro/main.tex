@@ -13,6 +13,7 @@
 \acmConference{Geometry Data Analysis}{December 2024}{Paris, France}
 
 \acmISBN{978-1-4503-XXXX-X/18/06}
+\citestyle{acmauthoryear}
 \begin{document}
 %%
 %% The "title" command has an optional parameter,
@@ -115,9 +116,9 @@ More formally, to keep the vector as parallel as possible, the covariant derivat
   \label{eq:covariant derivative}
 \end{equation}
 
-\subsection{Parallel Transport of a vector}
+\subsection{Discrete Parallel Transport}
 
-transport vector along shortest path/geodesic
+\cite{crane_trivial_2010} introduces a method to compute a discrete connection which describes how tangent spaces are mapped to one another on a curved surface. In particular, it can be used to parallel transport a vector from one point to another.
 
 \subsection{Applications}
 Parallel transporting a vector can be very useful in a wide range of applications where algorithm can build on it. It includes for example extrapolating velocities, mapping texture on a curved surface by defining a map relative to aspecified point, finding the center of a set of points on a curved surface, or even partition a shape whith a Voronoi diagram. Those methods would greatly benefit from a fast and accurate parallel transport method.
@@ -140,15 +141,12 @@ While $r$ is easily defined as the geodesic distance between $y$ and $x$, $\varp
 \end{figure}
 
 
-\subsubsection{Karcher/Fréchet means and geometric medians on general surfaces }
+\subsubsection{Karcher means and geometric medians on general surfaces }
 A general notion of center can be defined on shapes as the point that minimize an energy which depends on its geodesic distances to all points of the set. 
 Let $y_1$, $y_2$, ..., $y_n$ be a set of points on a surface $M$, the kercher mean is the point that minimizes the following energy:
 $$E(x):=\frac{1}{2n}\sum_{i=1}^{n}d(x,y_i)^2$$
 
 The gradient at a point $x$ of the energy to minimize is just the mean of the logarithms $\log_x y_i$ of the points of the set. To find the mean, $x$ can be iteratively updated to $\exp_{x}(\tau v)$ with $v=\frac{1}{n}\sum_{i=1}^{n}\log_x(y_i)$. However, it requires to compute the logarithmic map at each iteration. Thus, a fast and accurate parallel transport method would allow the computation of the mean using the logarithmic maps.
-
-\subsubsection{Voronoi diagram on surfaces}
-Derived from the karcher mean, the Voronoi diagram on surfaces is a partition of the surface into regions that are closer to a given set of points than to any other point on the surface. 
 
 
 \section{Methodologies}
