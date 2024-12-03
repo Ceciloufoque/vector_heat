@@ -13,6 +13,7 @@
 \acmConference{Geometry Data Analysis}{December 2024}{Paris, France}
 
 \acmISBN{978-1-4503-XXXX-X/18/06}
+\citestyle{acmauthoryear}
 \begin{document}
 %%
 %% The "title" command has an optional parameter,
@@ -101,6 +102,11 @@ mean, geometric median}
 \maketitle
 
 \section{Introduction}
+Parallel transport can be a key starting point for a wide variety of application in geometry processing where curved surfaces are involved. Applications such as velocities extrapolation, texture mapping or Karcher mean computation would greatly benefits from a fast and accurate computation of the parallel transport of a vector on the surface.
+
+However, past methods are expensive to compute. This gives room for the Vector Heat Method \cite{Sharp:2019:VHM} to achieve a much better trade-off between speed and quality. The Vector Heat Method rely on a simple linear system derived from the vector heat equation to compute the parallel transport of a vector on a surface. This comes from the observation that, as the time $t$ goes to 0, the vector heat kernel converges to the parallel transport along the shortest geodesic path.
+
+
 
 \section{Link to Scalar Heat Method}
 The Scalar and Vector Heat Methods both present two major advantages. 
@@ -115,8 +121,7 @@ reduces the amortized cost for applications that require
 repeated distance queries on a fixed geometric domain.
 Moreover, because the heat method is built on standard lin-
 ear PDEs that are widespread in scientific computing, it can
-immediately take advantage of new developments in numer-
-ical linear algebra and parallelization."
+immediately take advantage of new developments in numerical linear algebra and parallelization."
 
 \section{Parallel Transport}
 
@@ -130,9 +135,14 @@ More formally, to keep the vector as parallel as possible, the covariant derivat
   \label{eq:covariant derivative}
 \end{equation}
 
-\subsection{Parallel Transport of a vector}
+\subsection{Discrete Parallel Transport}
 
-transport vector along shortest path/geodesic
+\cite{crane_trivial_2010} introduce a method to compute a discrete connection which describes how tangent spaces are mapped to one another on a curved surface. In particular, it can be used to parallel transport a vector from one point to another. They use a trivial connection which is, contrarily to the Levi-Civita connection, not path dependant.
+
+\cite{polthier_straightest_2006} parallel transport a vector by unfolding the polyhedral surface and transporting it into the euclidean plane along straightest geodesic paths. The exact polyhedral geodesics can be computed following \cite{surazhsky_fast_nodate}.
+
+However, simply computing the path from the vertex of the original vector to the other vertex of the shape is already expensive. A faster method achieving a satisfying trade-off between accuracy and speed is the Vector Heat Method \cite{Sharp:2019:VHM}. It unlocks many applications in geometry processing and shape analysis.
+
 
 \subsection{Applications}
 Parallel transporting a vector can be very useful in a wide range of applications where algorithm can build on it. It includes for example extrapolating velocities, mapping texture on a curved surface by defining a map relative to aspecified point, finding the center of a set of points on a curved surface, or even partition a shape whith a Voronoi diagram. Those methods would greatly benefit from a fast and accurate parallel transport method.
@@ -155,15 +165,13 @@ While $r$ is easily defined as the geodesic distance between $y$ and $x$, $\varp
 \end{figure}
 
 
-\subsubsection{Karcher/Fréchet means and geometric medians on general surfaces }
-Notion of center by minimizing a distance to all points of the set. The Karcher mean is the point that minimizes the sum of the squared geodesic distances to all points of the set. The gradient at a point $x$ of the energy to minimize is just the sum of the logarithms $\log_x y_i$ of the points of the set. Iteratively update and rceompute logmap. 
+\subsubsection{Karcher means and geometric medians on general surfaces }
+A general notion of center can be defined on shapes as the point that minimize an energy which depends on its geodesic distances to all points of the set. 
+Let $y_1$, $y_2$, ..., $y_n$ be a set of points on a surface $M$, the kercher mean is the point that minimizes the following energy:
+$$E(x):=\frac{1}{2n}\sum_{i=1}^{n}d(x,y_i)^2$$
 
-\subsubsection{Voronoi diagram on surfaces}
-Derived from the karcher mean, the Voronoi diagram on surfaces is a partition of the surface into regions that are closer to a given set of points than to any other point on the surface. 
+The gradient at a point $x$ of the energy to minimize is just the mean of the logarithms $\log_x y_i$ of the points of the set. To find the mean, $x$ can be iteratively updated to $\exp_{x}(\tau v)$ with $v=\frac{1}{n}\sum_{i=1}^{n}\log_x(y_i)$. However, it requires to compute the logarithmic map at each iteration. Thus, a fast and accurate parallel transport method would allow the computation of the mean using the logarithmic maps.
 
-
-\section{Context}
-(nicolas)
 
 \section{Methodologies}
 Let $M$ be a Riemannian manifold with metric $g$. We denote by $d(x,y)$ the corresponding geodesic distance between any pair of point $x,y$. 
@@ -567,6 +575,10 @@ the SHM if we compare it with non-exact fast methods.
   \caption{Times measured}
   \label{fig:time_graphs}
 \end{figure}
+
+\section{Conclusion}
+
+In this paper, we have presented the Vector Heat Method, a fast and accurate method to parallel transport a vector field on a curved surface.
 
 \bibliographystyle{ACM-Reference-Format}
 \bibliography{ref}
