@@ -102,6 +102,21 @@ mean, geometric median}
 
 \section{Introduction}
 
+\section{Link to Scalar Heat Method}
+The Scalar and Vector Heat Methods both present two major advantages. 
+
+"Relative to existing algorithms, the heat method offers 
+two major advantages. First, it can be applied to virtually any
+type of geometric discretization, including regular grids,
+polygonal meshes, and point clouds. Second, it involves
+only sparse linear systems, which can be prefactored once
+and rapidly resolved many times—this feature substantially
+reduces the amortized cost for applications that require
+repeated distance queries on a fixed geometric domain.
+Moreover, because the heat method is built on standard lin-
+ear PDEs that are widespread in scientific computing, it can
+immediately take advantage of new developments in numer-
+ical linear algebra and parallelization."
 
 \section{Parallel Transport}
 
@@ -151,12 +166,30 @@ Derived from the karcher mean, the Voronoi diagram on surfaces is a partition of
 (nicolas)
 
 \section{Methodologies}
-Let $M$ be a Riemannian manifold with metric $g$. We denote by $d(x,y)$ the corresponding geodesic distance. 
+Let $M$ be a Riemannian manifold with metric $g$. We denote by $d(x,y)$ the corresponding geodesic distance between any pair of point $x,y$. 
 The cut locus of a point $p$ on $M$ is the closure of the set of all other points on $M$ that are connected to $p$
 by two or more distinct shortest geodesics. More generally, the cut locus of a closed set $X$ on $M$ is the closure of the set of 
 all other points on the manifold connected to $X$ by two or more distinct shortest geodesics.
+
+\subsection{Scalar heat method}
+The Scalar Heat Method (\cite{Crane:2017:HMD}) is presented in algorithm \ref{algo2}: the heat equation and the Poisson equation are used to find the geodesic distances
+between any point on the domain and the input source set. In the following, 
+
+\begin{algorithm}
+  \caption{Scalar Heat Method} \label{algo2}
+  \begin{algorithmic}
+    \Require A given source set in a setting where a gradient operator $\nabla$, a divergence operator $\nabla$ and a Laplace operator $\Delta = \nabla \cdot \nabla$ 
+    are well defined. 
+    \Ensure The distance function $d$ between any point and the source set. \\
+    \noindent \textbf{I.} Integrate the heat flow $\dot{u} = \Delta u.$\\
+    \textbf{II. }Evaluate the vector field $X = -\frac{\nabla u_t}{|\nabla u_t|}.$ \\
+    \textbf{III. }Solve the Poisson equation $\Delta \phi = \nabla \cdot X. $\\
+    \textbf{IV. } Shift $\phi$ such that the smallest distance is zero. \\
+  \end{algorithmic}
+\end{algorithm}
+The initial conditions, the time discretization and spatial discretization can be taken as the same as in the Vector Heat Method presented below. 
 \subsection{Vector heat method}
-The vector heat method \cite{sharp_vector_2019} is presented in algorithm \ref{algo1}: the vector heat equation is used to diffuse the input vector field and then the scalar heat vector is used to adjust the magnitude of the resulting vectors. Indeed, the vector heat equation gives vectors pointing to the right directions for small values of time $t$ but the magnitudes are wrong. 
+The Vector Heat Method (\cite{Sharp:2019:VHM}) is presented in algorithm \ref{algo1}: the vector heat equation is used to diffuse the input vector field and then the scalar heat vector is used to adjust the magnitude of the resulting vectors. Indeed, the vector heat equation gives vectors pointing to the right directions for small values of time $t$ but the magnitudes are wrong. 
 
 \begin{algorithm}
 \caption{Vector Heat Method} \label{algo1}
@@ -232,8 +265,8 @@ $$\overline{X}_t(p) = \frac{\overline{u}(t,p)Y_t(p)}{|Y_t(p)|}$$ with $\overline
 The vector heat method is is discretized on triangle meshes denoted by $K = (V, E, F)$
 with $V$ being the set of vertices, $E$ being the set of edges and $F$ 
 being the set of corresponding faces. The discretization formalism relies 
-on results presented in articles \cite{10.1145/2461912.2462005} and \cite{Knoppel:2015:SPS}.
-Denote by $ikj$ the triangle with vertices $i, j, k \in V$ and $\theta_k^{ij}$ the angle at 
+on results presented in articles \cite{10.1145/2461912.2462005} and \cite{Knoppel:2015:SPS}. Let $k,l$ be the vertices opposite 
+a given edge $ij$. Denote by $ikj$ the triangle with vertices $i, j, k \in V$ and $\theta_k^{ij}$ the angle at 
 vertex $k$ whose opposite edge is $ij\in E$. Likewise, we define $\theta_i^{jk}$ 
 and $\theta_j^{ik}$ as the angles at vertices $i$ and $j$ whose opposite edges are $jk, ik \in E$. 
 Let $a = \cot \theta_i^{jk}$, $b = \cot \theta_j^{ki}$ and $c = \cot \theta_k^{ij}$. 
@@ -257,7 +290,24 @@ L^\nabla_{ijk} = -\frac{1}{2}\begin{pmatrix}
   -br_{ki} & -ar_{kj} & a + b
   \end{pmatrix}.
 $$
-\subsubsection{Intrinsic Delaunay triangulation} To improve robustness and 
+\subsubsection{Intrinsic Delaunay triangulation} To improve robustness and accuracy, the vector heat method is first applied to a 
+slightly modified mesh and the solution is then copied back to the original mesh. The intrinsic Delaunay mesh prevents from getting 
+negative diagonal terms in the local $3\times3$ matrices $L_{ijk}$ and $L^\nabla_{ijk}$. To do that, the intrinsic Delaunay algorithm 
+"flips" any edge $ij$ where $\theta_k^{ij} + \theta_l^{ji}>\pi$: the edge $ij$ is replaced by the new edge $kl$, with $k,l$ being the 
+vertices opposite the edge $ij$. Additionally, the angles encoding the direction of the flipped edge $kl$ at vertices $k,l$ are computed 
+so that the local tangent spaces can be updated on each flip and so that the solution computed on Delaunay triangulation can be easily mapped 
+back to the original mesh thanks to local polar coordinates. 
+
+\subsubsection{Discretized equations}
+Let $A_{ijk}$ be the area of the triangle $ijk$. We define the \textbf{lumped mass matrix} $M$ which is the diagonal matrix of shape $|V| \times |V|$ with diagonal terms 
+equal to $$M_{i,i} = \frac{1}{3}\sum_{ijk\in F}A_{ijk}.$$ Applying a one-step backward Euler approximation gives the following equations of for the first three points 
+of algorithm \ref{algo1}:
+\begin{align*}
+ (M-tL^\nabla)Y & = Y_0 \\
+ (M - tL)u & = u_0 \\
+ (M - tL)\phi & = \phi_0
+\end{align*}
+with the source data represented in $Y_0\in \mathbb{C}^{|V|}$, $u_0 \in \mathbb{R}^|V|, \phi_0 \in \mathbb{R}^{|V|}$.
 \begin{comment}
 \begin{algorithm}
 \caption{An algorithm with caption}\label{alg:cap}
