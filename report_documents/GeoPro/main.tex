@@ -134,7 +134,7 @@ While $r$ is easily defined as the geodesic distance between $y$ and $x$, $\varp
 
 \begin{figure}[h]
   \centering
-  \includegraphics[width=0.5\textwidth]{img/logmap_paper.png}
+  \includegraphics[width=0.5\textwidth]{dragon_log_map.png}
   \caption{\textbf{Logarithmic map on a curved surface}. \textmd{The logarithmic map provides a coordinate system on the surface with respect to an origin and a choice of an initial unit vector to define $\varphi$.}}
   \label{fig:logarithmic_map}
 \end{figure}
@@ -289,7 +289,6 @@ In this demo, the solvers for the scalar and vector heat methods were implemente
 To simplify the experimentation and work in a more familiar set-up, we used instead a Python library equivalent named Potpourri3d \cite{library_potpourri3d}, 
 which was developped by Sharp (one of the authors of the paper).
 In addition to this, we used Trimesh for the manipulation of meshes and PyVision to visualize the results.
-
 For the 3d bodies used throught the experiment, we started with those in the github repository~\cite{github_objects_repo},
 as they presented clean 3d manifolds.
 
@@ -297,6 +296,7 @@ A fraction of the meshes used contained some degenerations present in the form o
 This required an extra step in the preprocessing before applying the algorithms. The first step consisted in the union of all vertices in
 an epsilon distance from one another, which removed disconections. Then we removed unreferenced vertices to avoid isolated ones. And finally,
 for the duplicated edges, we did a more manual approach by analyzing the origin of the errors and removed the faces that generated the issue. 
+
 \subsection{Scalar heat robustness}
 (icel)
 The first experience we did was to analyze the robustness of the Scalar Heat Method~\cite{Crane:2017:HMD}. In
@@ -445,29 +445,75 @@ the "cut locus" vectors constitute a non-continuity of the vector field but they
   \label{fig:cut_locus_vectors}
 \end{figure}
 
-%\end{comment}
+\subsection{Log-map recreation}
 
-\subsection{Log-map recreation for postures}
+We attempted to implement the steps necessary to add a specific image
+on the surface of a manifold. This is done through the Log-map function.
+This function takes as input a mesh and an initial vertex and outputs
+the reference of each point on a 2d plane. This in practice can be used to
+plot any image on the surface.
+
+We recreated the setup to try to plot a logo on the chest of a 3d model
+(fig~\ref{fig:low_poly_human}). In this attempt we transported, scaled and rotated a
+2d image from a jpg onto the front of the model and we painted each
+vertex of its respective color. The color in each face was a gradient from
+the vertice colors, so the result was a blurried low-resolution image. 
+
+To solve this issue, we re-attempt with a higher-poly image (fig~\ref{fig:high_poly_human}),
+but this time the log-solver could not reliably obtained the correct values due to the complexity of the model
+and high triangle count. This can be verified by using the original log-map
+picture (fig~\ref{fig:high_poly_human_original_demo}).
+
+We finally attempted with no succes no use pyvista to add a texture on each face
+to obtain a higher resolution picture from a low-poly mesh. This would maintain
+the good behavior of the algorithm on the lower-poly body, while allowing to
+have details in the image too. 
+
+\begin{figure}
+  \centering
+  \includegraphics[width=4cm]{human_spiderman.png}
+  \caption{Low-poly human log-map test}
+  \label{fig:low_poly_human}
+\end{figure}
+
+\begin{figure}[htbp]
+  \centering
+  \hfill
+  \begin{subfigure}[b]{0.23\textwidth}
+    \centering
+    \includegraphics[width=4cm]{human_spiderman_high.png}
+    \caption{High-poly human log-map test}
+    \label{fig:high_poly_human}
+  \end{subfigure}
+  \begin{subfigure}[b]{0.23\textwidth}
+    \centering
+    \includegraphics[width=4cm]{log_map_wrong.png}
+    \caption{High-poly human log-map with original demo}
+    \label{fig:high_poly_human_original_demo}
+  \end{subfigure}
+  \caption{Vector heat method on pseudo cut locus points}
+  \label{fig:cut_locus_vectors}
+\end{figure}
 
 \subsection{Preprocessing vs processing times}
-(icel)
 
-The implementation of the SHM algorithm is composed of two parts,
-a preprocessing to get the laplacians and the computation of the 
-distances from a source vertex/set of vectors.
+The implementation of the SHM algorithm is composed of two parts:
+a preprocessing to get the laplacians, and the computation of the 
+distances from a source vertex/set of vectors. In this point we wanted to compare the speed of this method with
+the exact method using meshes of different sizes. 
 
-In this point we wanted to compare the speed of this method with
-the exact method using meshes of different sizes. For the experiment,
-we ran three experiments, first measure the time for the exact method,
-then measure the time for the SHM executing the preprocessing and processing
-every loop, and finally executing the SHM preprocessing once and then computing
-the distances in the loop.
+For the experiment, we ran three tests. First, we measured the time for the exact method,
+then we measured the time for the SHM executing the preprocessing and processing
+every loop, and finally we executed the SHM preprocessing once and then we only computed
+the distances in the loop. We plotted the results obtained in fig~\ref{fig:time_graphs}. 
 
-We plotted the results obtained in fig~\ref{fig:time_graphs}. We can see that
-for the larger plots the exact algorithm is slower than the SHM. However, almost all
-time is dedicated to the preprocessing of the mesh, so the improvements are not so
-
-If we could only use the FMM in python...
+We can see that for the larger plots the exact algorithm is slower than the SHM. 
+However, almost all of the time is dedicated to the preprocessing of the mesh, 
+so the real advantage of the method is for the case where we work with a limited
+quantity of meshes that we have preprocess beforehand. Moreover, we did not
+use the Fast marching method for the comparaisson due to complications on its
+implementation in python, so there is probably an even smaller time gain for using
+the SHM if we compare it with non-exact fast methods.
 
 \begin{figure}
   \centering
