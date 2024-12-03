@@ -407,10 +407,6 @@ dense enough, it will give a correct representation of the distances (Fig~\ref{f
   \label{fig:hand_distances}
 \end{figure}
 
-\subsection{T's verifications with perfect results}
-(nicolas)
-https://hhoppe.com/geodesics.pdf
-
 \subsection{Behavior at cut locus}
 (cécile)
 Because there is the ambiguity of choosing which closest point in $\Omega$ to take for points on the cut locus, we decided to check 
@@ -522,23 +518,6 @@ the SHM if we compare it with non-exact fast methods.
   \label{fig:time_graphs}
 \end{figure}
 
-
-
-
-\section{BRAIN STORM:}
-\begin{itemize}
-  \item Test robustness with a custom mesh + noise (similar to what they did) and mesh+crossed triangles (shortcuts should break the results?)
-  \item Test different step sizes (t's) verify that 1 seems to be the best
-  \item Compare results numerically with 'perfect' algorithm from https://hhoppe.com/geodesics.pdf
-  \item Find how to test with different data types (point clouds, triang meshes, poly meshes) and compare results (if possible in software without too much rewriting?)
-  \item Try results on bad vs good triangulated meshes (to check if Delaunay works fine)
-  \item Think about new possible applications? Videogames/3d animation?? 
-  \item Check 2020 method to compute geodesics only by flipping triangles. One advantage seems to be that it works to find not only global shortest paths, but also local ones (if two points are next to each other, it can find the shortest path in the opposite direction by turning around)  https://dl.acm.org/doi/10.1145/3414685.3417839
-  \item Test speed against fast marching method for scalar heat method
-  \item Check behaviour at Cut locus and comment it
-  \item Look for applications the Karcher mean
-\end{itemize}
-
 \bibliographystyle{ACM-Reference-Format}
 \bibliography{sample-base}
 
@@ -546,5 +525,3 @@ the SHM if we compare it with non-exact fast methods.
 \end{document}
 
 \endinput
-%%
-%% End of file `sample-sigconf-authordraft.tex'.
