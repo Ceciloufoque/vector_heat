@@ -49,12 +49,7 @@
 
 
 \begin{abstract}
-  A clear and well-documented \LaTeX\ document is presented as an
-  article formatted for publication by ACM in a conference proceedings
-  or journal publication. Based on the ``acmart'' document class, this
-  article presents and explains many of the common variations, as well
-  as many of the formatting elements an author may use in the
-  preparation of the documentation of their work.
+  Parallel transporting a vector efficiently everywhere on a surface unlocks many applications in geometry processing such as velocities extrapolation, texture mapping or Karcher mean computation. However, classic methods are not quick enough to be applied in some tasks. The Vector Heat Method succeeds to strike a balance between speed and quality by using the vector heat equation to compute the parallel transport of a vector on a surface. We challenge the speed and the robustness of the method by comparing it to the exact method on corrupted meshes. We find that on small meshes, the method is particularly robust to noise, but it can be more sensitive on larger meshes.
 \end{abstract}
 
 %%
@@ -105,6 +100,11 @@ mean, geometric median}
 Parallel transport can be a key starting point for a wide variety of application in geometry processing where curved surfaces are involved. Applications such as velocities extrapolation, texture mapping or Karcher mean computation would greatly benefits from a fast and accurate computation of the parallel transport of a vector on the surface.
 
 However, past methods are expensive to compute. This gives room for the Vector Heat Method \cite{Sharp:2019:VHM} to achieve a much better trade-off between speed and quality. The Vector Heat Method rely on a simple linear system derived from the vector heat equation to compute the parallel transport of a vector on a surface. This comes from the observation that, as the time $t$ goes to 0, the vector heat kernel converges to the parallel transport along the shortest geodesic path.
+
+This allow to construct an algorithm which compute the direction and the magnitude of the vector with respectively the vector heat equation and scalar interpolation.
+
+We challenge the robustness of the method by comparing it to the exact method on corrupted meshes. We also analyze the behavior of the method at the cut locus of the surface. We tried to reproduce a texture mapping on a surface using the logarithmic map and the parallel transport.
+We find that on small meshes, the method is particularly robust to noise, but it can be more sensitive on larger meshes.
 
 
 
