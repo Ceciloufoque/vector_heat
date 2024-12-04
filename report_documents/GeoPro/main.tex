@@ -578,7 +578,15 @@ the SHM if we compare it with non-exact fast methods.
 
 \section{Conclusion}
 
-In this paper, we have presented the Vector Heat Method, a fast and accurate method to parallel transport a vector field on a curved surface.
+In this paper, we have presented the Scalar Heat Method and the Vector Heat Method. We have discussed the mathematical background for both algorithms, the possible real-world applications for them and we have done some experiences to test some of their characteristics.
+
+In our first experiment, we deduced that the scalar heat method provides accurate results even for very irregular or discontinuous surfaces. However, the method still requires preprocessing to clear possible errors on meshes that would distort even perfect algorithms. To avoid the preprocessing, it is still possible to work with point clouds instead, as long as they are dense enough to capture the real geometry of the object.
+
+Additionally, we concluded that, in practice, the cut locus does not present too many issues, as its exact location usually does not intersect with the vertices of the mesh.
+
+Then, the capabilities of the log-map to plot images on the surfaces of manifolds still present issues for high-poly meshes, as the vector heat method tends to lose precision for these objects, rendering the results inaccurate. Moreover, when working with smaller meshes, extra computations are needed to allow plotting details on each triangle, otherwise the image is limited to the resolution of the vertex density.
+
+Finally, when testing the execution times, we verified that the significant speed improvements come from preprocessing the method solver a single time and then computing the distances repeatidly. 
 
 \bibliographystyle{ACM-Reference-Format}
 \bibliography{ref}
