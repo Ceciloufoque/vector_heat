@@ -1,5 +1,23 @@
+@article{Crane:2017:HMD,
+ author = {Crane, Keenan and Weischedel, Clarisse and Wardetzky, Max},
+ title = {The Heat Method for Distance Computation},
+ journal = {Commun. ACM},
+ issue_date = {November 2017},
+ volume = {60},
+ number = {11},
+ month = oct,
+ year = {2017},
+ issn = {0001-0782},
+ pages = {90--99},
+ numpages = {10},
+ url = {http://doi.acm.org/10.1145/3131280},
+ doi = {10.1145/3131280},
+ acmid = {3131280},
+ publisher = {ACM},
+ address = {New York, NY, USA},
+}
 @misc{youtube_video,
-  author       = {eigenchris},
+  author       = {Eigenchris},
   title        = {Tensor Calculus 18: Covariant Derivative (extrinsic) and Parallel Transport},
   howpublished = {YouTube},
   year         = {2018},
@@ -7,26 +25,89 @@
   note         = {Accessed: 2024-11-15}
 }
 
-
-@article{sharp_vector_2019,
-    title = {The {Vector} {Heat} {Method}},
-    volume = {38},
-    issn = {0730-0301, 1557-7368},
-    url = {https://dl.acm.org/doi/10.1145/3243651},
-    doi = {10.1145/3243651},
-    abstract = {This article describes a method for efficiently computing parallel transport of tangent vectors on curved surfaces, or more generally, any vector-valued data on a curved manifold. More precisely, it extends a vector field defined over any region to the rest of the domain via parallel transport along shortest geodesics. This basic operation enables fast, robust algorithms for extrapolating level set velocities, inverting the exponential map, computing geometric medians and Karcher/Fréchet means of arbitrary distributions, constructing centroidal Voronoi diagrams, and finding consistently ordered landmarks. Rather than evaluate parallel transport by explicitly tracing geodesics, we show that it can be computed via a short-time heat flow involving the
-              connection Laplacian
-              . As a result, transport can be achieved by solving three prefactored linear systems, each akin to a standard Poisson problem. To implement the method, we need only a discrete connection Laplacian, which we describe for a variety of geometric data structures (point clouds, polygon meshes, etc.). We also study the numerical behavior of our method, showing empirically that it converges under refinement, and augment the construction of intrinsic Delaunay triangulations so that they can be used in the context of tangent vector field processing.},
-    language = {en},
-    number = {3},
-    urldate = {2024-11-10},
-    journal = {ACM Transactions on Graphics},
-    author = {Sharp, Nicholas and Soliman, Yousuf and Crane, Keenan},
-    month = jun,
-    year = {2019},
-    pages = {1--19},
-    file = {PDF:C\:\\Users\\nicol\\Zotero\\storage\\UNAY8GV4\\Sharp et al. - 2019 - The Vector Heat Method.pdf:application/pdf},
+@article{crane_trivial_2010,
+  title = {Trivial {Connections} on {Discrete} {Surfaces}},
+  volume = {29},
+  copyright = {© 2010 The Author(s) Journal compilation © 2010 The Eurographics Association and Blackwell Publishing Ltd.},
+  issn = {1467-8659},
+  url = {https://onlinelibrary.wiley.com/doi/abs/10.1111/j.1467-8659.2010.01761.x},
+  doi = {10.1111/j.1467-8659.2010.01761.x},
+  abstract = {This paper presents a straightforward algorithm for constructing connections on discrete surfaces that are as smooth as possible everywhere but on a set of isolated singularities with given index. We compute these connections by solving a single linear system built from standard operators. The solution can be used to design rotationally symmetric direction fields with user-specified singularities and directional constraints.},
+  language = {en},
+  number = {5},
+  urldate = {2024-12-03},
+  journal = {Computer Graphics Forum},
+  author = {Crane, Keenan and Desbrun, Mathieu and Schröder, Peter},
+  year = {2010},
+  note = {\_eprint: https://onlinelibrary.wiley.com/doi/pdf/10.1111/j.1467-8659.2010.01761.x},
+  keywords = {and, Computer, curve, generation, Generation—Line, Graphics:, I.3.3, Picture/Image},
+  pages = {1525--1533},
+  file = {PDF:C\:\\Users\\nicol\\Zotero\\storage\\NUCQ9L4T\\Crane et al. - 2010 - Trivial Connections on Discrete Surfaces.pdf:application/pdf;Snapshot:C\:\\Users\\nicol\\Zotero\\storage\\WZXXJSL5\\j.1467-8659.2010.01761.html:text/html},
 }
+
+@article{Sharp:2019:VHM,
+ author = {Sharp, Nicholas and Soliman, Yousuf and Crane, Keenan},
+ title = {The Vector Heat Method},
+ journal = {ACM Trans. Graph.},
+ volume = {38},
+ number = {3},
+ year = {2019},
+ publisher = {ACM},
+ address = {New York, NY, USA},
+}
+
+@misc{library_potpourri3d,
+  author = {Sharp, Nicholas and Johnathon, Selstad and Lukas, Koestler},
+  title = {Potpourri3d},
+  publisher = {GitHub},
+  journal = {GitHub repository},
+  year = {2021},
+  howpublished = {\url{https://github.com/nmwsharp/potpourri3d}},
+}
+
+@article{polthier_straightest_2006,
+  title = {Straightest {Geodesics} on {Polyhedral} {Surfaces}},
+  abstract = {Geodesic curves are the fundamental concept in geometry to generalize the idea of straight lines to curved surfaces and arbitrary manifolds. On polyhedral surfaces we introduce the notion of discrete geodesic curvature of curves and deﬁne straightest geodesics. This allows a unique solution of the initial value problem for geodesics, and therefore a unique movement in a given tangential direction, a property not available in the well-known concept of locally shortest geodesics.},
+  language = {en},
+  journal = {Discrete Differential Geometry},
+  author = {Polthier, Konrad and Schmies, Markus},
+  year = {2006},
+  file = {PDF:C\:\\Users\\nicol\\Zotero\\storage\\39RBEJH2\\Polthier et Schmies - 2006 - Straightest Geodesics on Polyhedral Surfaces.pdf:application/pdf},
+}
+
+@article{surazhsky_fast_nodate,
+  title = {Fast exact and approximate geodesics on meshes},
+  abstract = {The computation of geodesic paths and distances on triangle meshes is a common operation in many computer graphics applications. We present several practical algorithms for computing such geodesics from a source point to one or all other points efﬁciently. First, we describe an implementation of the exact “single source, all destination” algorithm presented by Mitchell, Mount, and Papadimitriou (MMP). We show that the algorithm runs much faster in practice than suggested by worst case analysis. Next, we extend the algorithm with a merging operation to obtain computationally efﬁcient and accurate approximations with bounded error. Finally, to compute the shortest path between two given points, we use a lower-bound property of our approximate geodesic algorithm to efﬁciently prune the frontier of the MMP algorithm, thereby obtaining an exact solution even more quickly.},
+  language = {en},
+  year = {2005},
+  author = {Surazhsky, Vitaly and Surazhsky, Tatiana and Kirsanov, Danil and Gortler, Steven J and Hoppe, Hugues},
+  file = {PDF:C\:\\Users\\nicol\\Zotero\\storage\\STX9CCPN\\Surazhsky et al. - Fast exact and approximate geodesics on meshes.pdf:application/pdf},
+}
+
+@misc{github_objects_repo,
+  title = {common 3d objects repository},
+  publisher = {GitHub},
+  journal = {GitHub repository},
+  year = {2020},
+  howpublished = {\url{https://github.com/alecjacobson/common-3d-test-models}},
+}
+
+@misc{exact_method_library,
+  author = {Lia Domide, Ayan Banerjee, Marmaduke Woodman},
+  title = {tvb-gdist},
+  year = {2020},
+  publisher = {GitHub},
+  journal = {GitHub repository},
+  howpublished = {\url{https://github.com/the-virtual-brain/tvb-gdist}},
+}
+
+@article{exact_method_algorithm,
+    author = {Joseph S. B. Mitchell, David M. Mount, Christos H. Papadimitriou},
+    title = {The discrete geodesic problem},
+    journal = {Society for Industrial and Applied Mathematics},
+    year = {1987}
+}
+
 
 @article{crane_geodesics_2013,
     title = {Geodesics in heat: {A} new approach to computing distance based on heat flow},
@@ -45,3 +126,37 @@
     pages = {152:1--152:11},
     file = {Version soumise:C\:\\Users\\nicol\\Zotero\\storage\\4LFB3WPA\\Crane et al. - 2013 - Geodesics in heat A new approach to computing distance based on heat flow.pdf:application/pdf},
 }
+
+
+    @article{10.1145/2461912.2462005,
+    author = {Kn\"{o}ppel, Felix and Crane, Keenan and Pinkall, Ulrich and Schr\"{o}der, Peter},
+    title = {Globally optimal direction fields},
+    year = {2013},
+    issue_date = {July 2013},
+    publisher = {Association for Computing Machinery},
+    address = {New York, NY, USA},
+    volume = {32},
+    number = {4},
+    issn = {0730-0301},
+    url = {https://doi.org/10.1145/2461912.2462005},
+    doi = {10.1145/2461912.2462005},
+    abstract = {We present a method for constructing smooth n-direction fields (line fields, cross fields, etc.) on surfaces that is an order of magnitude faster than state-of-the-art methods, while still producing fields of equal or better quality. Fields produced by the method are globally optimal in the sense that they minimize a simple, well-defined quadratic smoothness energy over all possible configurations of singularities (number, location, and index). The method is fully automatic and can optionally produce fields aligned with a given guidance field such as principal curvature directions. Computationally the smoothest field is found via a sparse eigenvalue problem involving a matrix similar to the cotan-Laplacian. When a guidance field is present, finding the optimal field amounts to solving a single linear system.},
+    journal = {ACM Trans. Graph.},
+    month = jul,
+    articleno = {59},
+    numpages = {10},
+    keywords = {curvature lines, digital geometry processing, direction fields, discrete differential geometry, singularities}
+    }
+
+      
+@article{Knoppel:2015:SPS,
+   author = {Kn\"{o}ppel, Felix and Crane, Keenan and Pinkall, Ulrich and Schr\"{o}der, Peter},
+   title = {Stripe Patterns on Surfaces},
+   journal = {ACM Trans. Graph.},
+   volume = {34},
+   issue = {4},
+   year = {2015},
+   publisher = {ACM},
+   address = {New York, NY, USA},
+}
+
