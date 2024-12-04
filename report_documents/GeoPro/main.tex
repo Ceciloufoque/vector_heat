@@ -49,7 +49,7 @@
 
 
 \begin{abstract}
-  Parallel transporting a vector efficiently everywhere on a surface unlocks many applications in geometry processing such as velocities extrapolation, texture mapping or Karcher mean computation. However, classic methods are not quick enough to be applied in some tasks. The Vector Heat Method succeeds to strike a balance between speed and quality by using the vector heat equation to compute the parallel transport of a vector on a surface. We challenge the speed and the robustness of the method by comparing it to the exact method on corrupted meshes. We find that on small meshes, the method is particularly robust to noise, but it can be more sensitive on larger meshes.
+  Parallel transporting a vector efficiently everywhere on a surface unlocks many applications in geometry processing such as velocities extrapolation, texture mapping or Karcher mean computation. However, classic methods are not quick enough to be applied in some tasks. The Vector Heat Method succeeds in striking a balance between speed and quality by using the vector heat equation to compute the parallel transport of a vector on a surface. We challenge the speed and the robustness of the method by comparing it to the exact method on corrupted meshes. We find that on small meshes, the method is particularly robust to noise, but it can be more sensitive on larger meshes.
 \end{abstract}
 
 %%
@@ -97,11 +97,11 @@ mean, geometric median}
 \maketitle
 
 \section{Introduction}
-Parallel transport can be a key starting point for a wide variety of application in geometry processing where curved surfaces are involved. Applications such as velocities extrapolation, texture mapping or Karcher mean computation would greatly benefits from a fast and accurate computation of the parallel transport of a vector on the surface.
+Parallel transport can be a key starting point for a wide variety of application in geometry processing where curved surfaces are involved. Applications such as velocities extrapolation, texture mapping or Karcher mean computation would greatly benefit from a fast and accurate computation of the parallel transport of a vector on the surface.
 
-However, past methods are expensive to compute. This gives room for the Vector Heat Method \cite{Sharp:2019:VHM} to achieve a much better trade-off between speed and quality. The Vector Heat Method rely on a simple linear system derived from the vector heat equation to compute the parallel transport of a vector on a surface. This comes from the observation that, as the time $t$ goes to 0, the vector heat kernel converges to the parallel transport along the shortest geodesic path.
+However, past methods are expensive to compute. This gives room for the Vector Heat Method \cite{Sharp:2019:VHM} to achieve a much better trade-off between speed and quality. The Vector Heat Method relies on a simple linear system derived from the vector heat equation to compute the parallel transport of a vector on a surface. This comes from the observation that, as the time $t$ goes to 0, the vector heat kernel converges to the parallel transport along the shortest geodesic path.
 
-This allow to construct an algorithm which compute the direction and the magnitude of the vector with respectively the vector heat equation and scalar interpolation.
+This allows to construct an algorithm which computes the direction and the magnitude of the vector with respectively the vector heat equation and scalar interpolation.
 
 We challenge the robustness of the method by comparing it to the exact method on corrupted meshes. We also analyze the behavior of the method at the cut locus of the surface. We tried to reproduce a texture mapping on a surface using the logarithmic map and the parallel transport.
 We find that on small meshes, the method is particularly robust to noise, but it can be more sensitive on larger meshes.
@@ -115,7 +115,7 @@ They can be applied to many geometric discretizations, including polygon meshes 
 \section{Parallel Transport}
 
 \subsection{Preliminaries: Covariant Derivative}
-Transporting a vector in an euclidean space into a constant vector field is trivial. However, this operation done on a curved manifold, like for example a a curved surface in a 3D space, requires to carefully change the orientation of the vector to keep the vectors as "parallel" as possible. Indeed, the vectors must reamains in the tangent spaces of the surface while the normals of the tangent spaces change. When parallel transporting a vector along the shortest geodesic path, the vector rate of change should be only normal to the surface. 
+Transporting a vector in an euclidean space into a constant vector field is trivial. However, for this operation to be done on a curved manifold, for example a curved surface in a 3D space, requires to carefully change the orientation of the vector to keep the vectors as "parallel" as possible. Indeed, the vectors must remain in the tangent spaces of the surface while the normals of the tangent spaces change. When parallel transporting a vector along the shortest geodesic path, the vector rate of change should be only normal to the surface. 
 
 More formally, to keep the vector as parallel as possible, the covariant derivative should be equal to 0 \cite{youtube_video}. The covariant derivative along a direction $\vec{w} $ is the rate of change of the vector in the direction $\vec{w}$ with the normal component substracted (Eq. \ref{eq:covariant derivative}) i.e. the orthogonal projection of the usual derivative onto the tangent space.
 
@@ -134,7 +134,7 @@ However, simply computing the path from the vertex of the original vector to the
 
 
 \subsection{Applications}
-Parallel transporting a vector can be very useful in a wide range of applications where algorithm can build on it. It includes for example extrapolating velocities, mapping texture on a curved surface by defining a map relative to aspecified point, finding the center of a set of points on a curved surface, or even partition a shape whith a Voronoi diagram. Those methods would greatly benefit from a fast and accurate parallel transport method.
+Parallel transporting a vector can be very useful in a wide range of applications where algorithms can build on it. It includes for example extrapolating velocities, mapping some texture on a curved surface by defining a map relative to a specified point, finding the center of a set of points on a curved surface, or even partition a shape with a Voronoi diagram. Those methods would greatly benefit from a fast and accurate parallel transport method.
 
 \subsubsection{Extrapolating velocities}
 Parallel transport can be used to extrapolate velocities on a curved surface. To advect quantities like color or temperature, a global and well behaved velocity field on the surface is needed. The parallel transport can be used to extrapolate the velocity field from a set of points on the surface on the whole surface.
@@ -144,7 +144,7 @@ Defining a map on a curved surface can be crucial for several tasks in geometry 
 
 It can be defined as the inverse operation of the exponential map. Let the point $x$ be on a closed surface $M$, the exponential map $\exp_x (rv)$ outputs the point $y\in M$ by starting from $x$ and walking in the tangent direction $v$ along a geodesic for a distance $r$. The logarithmic map $\log_x(y)$ is the inverse operation, it outputs the tangent vector $v$ and the smallest distance $r$ so that $\exp_x (rv)=y$. The vector $v$ can be associated with an angle $\varphi$ to define a polar coordinate system.
 
-While $r$ is easily defined as the geodesic distance between $y$ and $x$, $\varphi$ is defined as the angle between an "horizontal" vector field and the radial vector field emenating from the origin $x$. The radial vector field is the gradient of the geodesic distance from $x$. The horizontal vector field is the parallel transport on the all shape of any vector at x. This explain why parallel transport is needed to define the logarithmic map. 
+While $r$ is easily defined as the geodesic distance between $y$ and $x$, $\varphi$ is defined as the angle between an "horizontal" vector field and the radial vector field emenating from the origin $x$. The radial vector field is the gradient of the geodesic distance from $x$. The horizontal vector field is the parallel transport on the whole shape of some vector at $x$. This explains why parallel transport is needed to define the logarithmic map. 
 
 \begin{figure}[h]
   \centering
@@ -155,33 +155,35 @@ While $r$ is easily defined as the geodesic distance between $y$ and $x$, $\varp
 
 
 \subsubsection{Karcher means and geometric medians on general surfaces }
-A general notion of center can be defined on shapes as the point that minimize an energy which depends on its geodesic distances to all points of the set. 
-Let $y_1$, $y_2$, ..., $y_n$ be a set of points on a surface $M$, the kercher mean is the point that minimizes the following energy:
+A general notion of center can be defined on shapes as the point that minimizes an energy which depends on its geodesic distances to all points of the set. 
+Let $y_1$, $y_2$, ..., $y_n$ be a set of points on a surface $M$, the Karcher mean is the point that minimizes the following energy:
 $$E(x):=\frac{1}{2n}\sum_{i=1}^{n}d(x,y_i)^2$$
 
 The gradient at a point $x$ of the energy to minimize is just the mean of the logarithms $\log_x y_i$ of the points of the set. To find the mean, $x$ can be iteratively updated to $\exp_{x}(\tau v)$ with $v=\frac{1}{n}\sum_{i=1}^{n}\log_x(y_i)$. However, it requires to compute the logarithmic map at each iteration. Thus, a fast and accurate parallel transport method would allow the computation of the mean using the logarithmic maps.
 
 
 \section{Methodologies}
-Let $M$ be a Riemannian manifold with metric $g$. We denote by $d(x,y)$ the corresponding geodesic distance between any pair of point $x,y$. 
+Let $M$ be a Riemannian manifold with metric $g$. We denote by $d(x,y)$ the corresponding geodesic distance between any pair of points $x,y$. 
 The cut locus of a point $p$ on $M$ is the closure of the set of all other points on $M$ that are connected to $p$
 by two or more distinct shortest geodesics. More generally, the cut locus of a closed set $X$ on $M$ is the closure of the set of 
 all other points on the manifold connected to $X$ by two or more distinct shortest geodesics.
 
 \subsection{Scalar heat method}
 The Scalar Heat Method (\cite{Crane:2017:HMD}) is presented in algorithm \ref{algo2}: the heat equation and the Poisson equation are used to find the geodesic distances
-between any point on the domain and the input source set. In the following, 
+between any point on the domain and the input source set.
 
 \begin{algorithm}
   \caption{Scalar Heat Method} \label{algo2}
   \begin{algorithmic}
-    \Require A given source set in a setting where a gradient operator $\nabla$, a divergence operator $\nabla$ and a Laplace operator $\Delta = \nabla \cdot \nabla$ 
-    are well defined. 
-    \Ensure The distance function $d$ between any point and the source set. \\
-    \noindent \textbf{I.} Integrate the heat flow $\dot{u} = \Delta u.$\\
+    \Require A source set in a setting where a gradient operator $\nabla$, a divergence operator $\nabla$ and a Laplace operator $\Delta = \nabla \cdot \nabla$ 
+    are well defined. \\
+    
+    \textbf{I.} Integrate the heat flow $\dot{u} = \Delta u.$\\
     \textbf{II. }Evaluate the vector field $X = -\frac{\nabla u_t}{|\nabla u_t|}.$ \\
-    \textbf{III. }Solve the Poisson equation $\Delta \phi = \nabla \cdot X. $\\
-    \textbf{IV. } Shift $\phi$ such that the smallest distance is zero. \\
+    \textbf{III. }Solve the Poisson equation $\Delta d = \nabla \cdot X. $\\
+    \textbf{IV. } Shift $d$ such that the smallest distance is zero. \\
+
+    \textbf{Return:} The distance function $d$ between any point and the source set. \\
   \end{algorithmic}
 \end{algorithm}
 The initial conditions, the time discretization and spatial discretization can be taken as the same as in the Vector Heat Method presented below. 
@@ -191,18 +193,20 @@ The Vector Heat Method (\cite{Sharp:2019:VHM}) is presented in algorithm \ref{al
 \begin{algorithm}
 \caption{Vector Heat Method} \label{algo1}
 \begin{algorithmic}
-\Require A vector field $X$ supported on a subset $\Omega \subset M$ of the domain $M$.
-\Ensure A vector field $\overline{X}$ on all of $M$.
+\Require A vector field $X$ supported on a subset $\Omega \subset M$ of the domain $M$.\\
+
 %\Input{A vector field $X$ supported on a subset $\Omega \subset M$ of the domain $M$.}
 %\Output{A vector field $\overline{X}$ on all of $M$.}
 
-\noindent \textbf{I.} Integrate the vector heat flow $\frac{d}{dt} Y_t = \Delta Y_t$ for time $t$, with $Y_0 = X$. \\
+\textbf{I.} Integrate the vector heat flow $\frac{d}{dt} Y_t = \Delta Y_t$ for time $t$, with $Y_0 = X$. \\
 
 \textbf{II.} Integrate the scalar heat flow $\frac{d}{dt} u_t = \Delta u_t$ for time $t$, with $u_0 = |X|$. \\
 
-\textbf{III.} Integrate the scalar heat flow $\frac{d}{dt} \phi_t = \Delta \phi_t$ for time $t$, with $\phi_0 = \mathbf{1}_{\Omega}$. \\
+\textbf{III.} Integrate the scalar heat flow $\frac{d}{dt} \Phi_t = \Delta \Phi_t$ for time $t$, with $\Phi_0 = \mathbf{1}_{\Omega}$. \\
 
-\textbf{IV.} Evaluate the vector field $\overline{X}_t = \frac{u_t Y_t}{\phi_t |Y_t|}$.
+\textbf{IV.} Evaluate the vector field $\overline{X}_t = \frac{u_t Y_t}{\Phi_t |Y_t|}$.\\
+
+\textbf{Return:} A vector field $\overline{X}$ on all of $M$.
 \end{algorithmic}
 \end{algorithm}
 
@@ -297,14 +301,14 @@ back to the original mesh thanks to local polar coordinates.
 
 \subsubsection{Discretized equations}
 Let $A_{ijk}$ be the area of the triangle $ijk$. We define the \textbf{lumped mass matrix} $M$ which is the diagonal matrix of shape $|V| \times |V|$ with diagonal terms 
-equal to $$M_{i,i} = \frac{1}{3}\sum_{ijk\in F}A_{ijk}.$$ Applying a one-step backward Euler approximation gives the following equations of for the first three points 
+equal to $$M_{i,i} = \frac{1}{3}\sum_{ijk\in F}A_{ijk}.$$ Applying a one-step backward Euler approximation gives the following equations for the first three points 
 of algorithm \ref{algo1}:
 \begin{align*}
  (M-tL^\nabla)Y & = Y_0 \\
  (M - tL)u & = u_0 \\
- (M - tL)\phi & = \phi_0
+ (M - tL)\Phi & = \Phi_0
 \end{align*}
-with the source data represented in $Y_0\in \mathbb{C}^{|V|}$, $u_0 \in \mathbb{R}^|V|, \phi_0 \in \mathbb{R}^{|V|}$.
+with the source data represented in $Y_0\in \mathbb{C}^{|V|}$, $u_0 \in \mathbb{R}^|V|, \Phi_0 \in \mathbb{R}^{|V|}$.
 \begin{comment}
 \begin{algorithm}
 \caption{An algorithm with caption}\label{alg:cap}
@@ -335,17 +339,17 @@ In this demo, the solvers for the scalar and vector heat methods were implemente
 To simplify the experimentation and work in a more familiar set-up, we used instead a Python library equivalent named Potpourri3d \cite{library_potpourri3d}, 
 which was developped by Nicolas Sharp, one of the authors of the paper.
 In addition to this, we used Trimesh for the manipulation of meshes and PyVision to visualize the results.
-For the 3d bodies used throught the experiment, we mainly used those in the github repository~\cite{github_objects_repo},
+For the 3d bodies used through the experiment, we mainly used those in the github repository~\cite{github_objects_repo},
 as they presented clean 3d manifolds.
 
-A fraction of the meshes used contained some degenerations present in the form of duplicate edges, disconections or isolated vertices.
+A fraction of the meshes used contained some degenerations present in the form of duplicate edges, disconnections or isolated vertices.
 This required an extra step in the preprocessing before applying the algorithms. The first step consisted in the union of all vertices in
-an epsilon distance from one another, which removed disconections. Then we removed unreferenced vertices to avoid isolated ones. And finally,
+an epsilon distance from one another, which removed disconnections. Then we removed unreferenced vertices to avoid isolated ones. And finally,
 for the duplicated edges, we did a more manual approach by analyzing the origin of the errors and removed the faces that generated the issue. 
 
 \subsection{Scalar heat robustness}
 
-The first experience we did was to analyze the robustness of the Scalar Heat Method (shm)~\cite{Crane:2017:HMD}. In
+The first experience we did was to analyze the robustness of the Scalar Heat Method (SHM)~\cite{Crane:2017:HMD}. In
 the original paper, the authors tested different noise types: missing and sliver triangles,
 noisy coordinates and smoothed surfaces. So we recreated similar perturbations and numerically
 measured the results.
@@ -354,7 +358,7 @@ For this numerical representation, we decided to compare two things. First, the 
 with an exact slower method from the gdist library~\cite{exact_method_algorithm}\cite{exact_method_library}
 against the noisy body with the scalar heat method.
 Then, the noisy body with the exact method against the noisy body with the scalar heat method again.
-The first values explain the imperfections comming from the inexact method and the noise, while
+The first values explain the imperfections coming from the inexact method and the noise, while
 the second only tests the behaviour of our method in a noisy environment.
 
 Given $M = (V, F)$ our original mesh, $N = |V|$ the number of vertices in the mesh, and $\hat{M} = (\hat{V}, \hat{F})$ the noisy mesh,
@@ -368,19 +372,19 @@ the formulas used for this representation were:
   \text{precision}_{\text{original v noisy}} = \frac{\sum_{i=1}^N \mathbf{1}_{\{|\text{dist}_1(V_i) - \text{dist}_2(\hat{V}_i)| < 2\%\}}}{\text{N}} 
 \end{equation}
 
-Where $\text{dist}_1$ and $\text{dist}_2$ are both the normalized distances (from 0 to 1 for the intrinsic farthest point) obtained from the exact method and the shm respectively.
+Where $\text{dist}_1$ and $\text{dist}_2$ are both the normalized distances (from 0 to 1 for the intrinsic farthest point) obtained from the exact method and the SHM respectively.
 
-We tested the robustness with two different type of noises (Fig~\ref{fig:all_bunnies}), inspired from what was presented in the paper. 
+We tested the robustness with two different types of noises (Fig~\ref{fig:all_bunnies}), inspired from what was presented in the paper. 
 The first one is a gaussian perturbation of the position of all vertices. The variation of this noise was the noise level times the average edge length.
-The second noise was a triangle swapp and triangle removal of a percentage of all triangles.
+The second noise was a triangle swap and triangle removal of a percentage of all triangles.
 The triangle swap is simply to find a pair of faces $abc$, $bcd$ and convert them to $abd$ and $acd$.
 This last perturbation quickly degenerated the meshes to the point where the exact algorithm could not
-process the geodesic distances, so it was keept to a smaller noise level. 
+process the geodesic distances, so it was kept to a smaller noise level. 
 
 To have a more general analysis, we used three different meshes and a set of ten random
 source points. The meshes from the repo~\cite{github_objects_repo} were, in order of complexity, cow (5.8k triangles), the Stanford Bunny (69.5k triangles) and Horse (97k triangles).
 
-In fig~\ref{fig:original_vs_noisy} we have the precision of the shm on noisy mesh compared with the exact method in the original mesh for
+In fig~\ref{fig:original_vs_noisy} we have the precision of the SHM on noisy mesh compared with the exact method in the original mesh for
 different levels of gaussian noise, while in fig~\ref{fig:noisy_vs_noisy} we compare both methods only in the noisy objects.
 
 We can see for the the large meshes the precision starts being virtually perfect, but it
@@ -395,7 +399,7 @@ original object to 30\% for the largest noise levels.
 Analyzing the errors for the swapped and missing faces noise we plot our results
 in fig~\ref{fig:noisy_vs_noisy_swapped_and_removed}. We see that SHM is virtually perfect
 for larger meshes, but again the noise on the smaller model is more significant because
-of its simplicity, what leads to some imprecisions. 
+of its simplicity, which leads to some imprecisions. 
 
 \begin{figure}
   \centering
@@ -455,14 +459,14 @@ dense enough, it will give a correct representation of the distances (Fig~\ref{f
 \end{figure}
 
 \subsection{Behavior at cut locus}
-(cécile)
+
 Because there is the ambiguity of choosing which closest point in $\Omega$ to take for points on the cut locus, we decided to check 
 the behaviour of the vector heat method on these points. For simplicity, $\Omega$ was restricted to a set a two source points $p_1, p_2$ and 
 the experiments were conducted on the same meshes mentioned above: the cow, the stanford bunny and the horse. We first used the heat method for 
 distance computation defined in \cite{crane_geodesics_2013} to compute the geodesic distances from our two points. The cut locus
 points were detected by setting a threshold to $\epsilon$ and looking at the vertices $p$ such that $|d(p_1, p) - d(p_2, p)|<\epsilon$. We then 
 observed the behaviour of the vector heat method at these points for $p_1, p_2$ sampled at random. Every time, the method yielded the result that 
-we expected. This can be explained by the fact due to the discretisation and the computation precision of the geodesic distances, the cut locus 
+we expected. This can be explained by the fact that due to the discretisation and the computation precision of the geodesic distances, the cut locus 
 points that are detected are not really on the cut locus, but only close to cut locus points. In theory, for points which are really on the cut 
 locus, the diffused vectors should be an average of all the closest vectors. In figures \ref{fig:cut_locus_vectors}, you can see that
 the "cut locus" vectors constitute a non-continuity of the vector field but they all point to the right directions. 
@@ -507,7 +511,7 @@ but this time the log-solver could not reliably obtain the correct values due to
 and high triangle count. This can be verified by using the original log-map
 picture and their demo (fig~\ref{fig:high_poly_human_original_demo}).
 
-We finally attempted with no succes no use pyvista to add a texture on each face
+We finally attempted with no success to use pyvista to add a texture on each face
 to obtain a higher resolution picture from a low-poly mesh. This would maintain
 the good behavior of the algorithm on the lower-poly body, while allowing to
 have details in the image too. 
@@ -553,8 +557,8 @@ the distances in the loop. We plotted the results obtained in fig~\ref{fig:time_
 We can see that for the larger plots the exact algorithm is slower than the SHM. 
 However, almost all of the time is dedicated to the preprocessing of the mesh, 
 so the real advantage of the method is for the case where we work with a limited
-quantity of meshes that we have preprocess beforehand. Moreover, we did not
-use the Fast marching method for the comparaisson due to complications on its
+quantity of meshes that we have preprocessed beforehand. Moreover, we did not
+use the Fast marching method for the comparison due to complications on its
 implementation in python, so there is probably an even smaller time gain for using
 the SHM if we compare it with non-exact fast methods.
 
@@ -569,13 +573,13 @@ the SHM if we compare it with non-exact fast methods.
 
 In this paper, we have presented the Scalar Heat Method and the Vector Heat Method. We have discussed the mathematical background for both algorithms, the possible real-world applications for them and we have done some experiences to test some of their characteristics.
 
-In our first experiment, we deduced that the scalar heat method provides accurate results even for very irregular or discontinuous surfaces. However, the method still requires preprocessing to clear possible errors on meshes that would distort even perfect algorithms. To avoid the preprocessing, it is still possible to work with point clouds instead, as long as they are dense enough to capture the real geometry of the object.
+In our first experiment, we deduced that the Scalar Heat Method provides accurate results even for very irregular or discontinuous surfaces. However, the method still requires preprocessing to clear possible errors on meshes that would distort even perfect algorithms. To avoid the preprocessing, it is still possible to work with point clouds instead, as long as they are dense enough to capture the real geometry of the object.
 
 Additionally, we concluded that, in practice, the cut locus does not present too many issues, as its exact location usually does not intersect with the vertices of the mesh.
 
 Then, the capabilities of the log-map to plot images on the surfaces of manifolds still present issues for high-poly meshes, as the vector heat method tends to lose precision for these objects, rendering the results inaccurate. Moreover, when working with smaller meshes, extra computations are needed to allow plotting details on each triangle, otherwise the image is limited to the resolution of the vertex density.
 
-Finally, when testing the execution times, we verified that the significant speed improvements come from preprocessing the method solver a single time and then computing the distances repeatidly. 
+Finally, when testing the execution times, we verified that the significant speed improvements come from preprocessing the method solver a single time and then computing the distances repeatedly. 
 
 \bibliographystyle{ACM-Reference-Format}
 \bibliography{ref}
