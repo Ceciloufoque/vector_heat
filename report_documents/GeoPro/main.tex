@@ -91,9 +91,9 @@
 transport, velocity extrapolation, logarithmic map, exponential map, Karcher
 mean, geometric median}
 
-\received{20 February 2007}
-\received[revised]{12 March 2009}
-\received[accepted]{5 June 2009}
+%\received{20 February 2007}
+%\received[revised]{12 March 2009}
+%\received[accepted]{5 June 2009}
 
 %%
 %% This command processes the author and affiliation and title
@@ -104,19 +104,8 @@ mean, geometric median}
 
 \section{Link to Scalar Heat Method}
 The Scalar and Vector Heat Methods both present two major advantages. 
+They can be applied to many geometric discretizations, including polygon meshes and point clouds, and they both reformulate computations with the heat equation into linear PDEs. Although they share these similarities, the outputs of these two methods are very different. On the one hand, the Scalar Heat Method returns the geodesic distance function to a given subset. On the other hand, the Vector Heat Method computes parallel transport of given source vectors along shortest geodesics. 
 
-"Relative to existing algorithms, the heat method offers 
-two major advantages. First, it can be applied to virtually any
-type of geometric discretization, including regular grids,
-polygonal meshes, and point clouds. Second, it involves
-only sparse linear systems, which can be prefactored once
-and rapidly resolved many times—this feature substantially
-reduces the amortized cost for applications that require
-repeated distance queries on a fixed geometric domain.
-Moreover, because the heat method is built on standard lin-
-ear PDEs that are widespread in scientific computing, it can
-immediately take advantage of new developments in numer-
-ical linear algebra and parallelization."
 
 \section{Parallel Transport}
 
@@ -262,7 +251,7 @@ The final step is simply to normalise the vector obtained in step 1 and scale th
 $$\overline{X}_t(p) = \frac{\overline{u}(t,p)Y_t(p)}{|Y_t(p)|}$$ with $\overline{u}(t,p) = \frac{u(t,p)}{\Phi(t, p)}$.
 
 \subsection{Discretization}
-The vector heat method is is discretized on triangle meshes denoted by $K = (V, E, F)$
+The vector heat method is discretized on triangle meshes denoted by $K = (V, E, F)$
 with $V$ being the set of vertices, $E$ being the set of edges and $F$ 
 being the set of corresponding faces. The discretization formalism relies 
 on results presented in articles \cite{10.1145/2461912.2462005} and \cite{Knoppel:2015:SPS}. Let $k,l$ be the vertices opposite 
